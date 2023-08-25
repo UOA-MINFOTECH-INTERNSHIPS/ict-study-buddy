@@ -1,12 +1,17 @@
 import "./home.scss";
-import React from 'react';
+import * as React from "react";
+import Stories from "../../components/stories/Stories";
+import Posts from "../../components/posts/Posts";
+import Shares from "../../components/shares/Shares";
 
-function Home(props) {
-    return (
-        <div className='home'>
-            HomePage 
-        </div>
-    );
+function home(props) {
+  return (
+    <div className="home">
+      <Stories />
+      <Shares />
+      <Posts />
+    </div>
+  );
 }
 
-export default Home;
+export default home;
