@@ -1,3 +1,4 @@
+import * as React from "react";
 import "./comments.scss";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
