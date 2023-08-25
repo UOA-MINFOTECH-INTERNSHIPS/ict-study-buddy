@@ -1,11 +1,14 @@
-import "./leftbar.scss";
 import * as React from "react";
+import "./leftbar.scss";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import GroupIcon from "@mui/icons-material/Group";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import AddToDriveIcon from "@mui/icons-material/AddToDrive";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 function LeftBar(props) {
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <div className="leftBar">
@@ -13,7 +16,7 @@ function LeftBar(props) {
         <div className="menu">
           <div className="user">
             <PersonOutlinedIcon />
-            <span>Jenny</span>
+            <span>{currentUser.name}</span>
           </div>
           <div className="item">
             <GroupIcon />
