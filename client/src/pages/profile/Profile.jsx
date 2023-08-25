@@ -55,10 +55,40 @@ function Profile(props) {
                   <span>Posts</span>
                 </div>
               </div>
-                <div className="connect">
-                  <button className="follow">Follow</button>
-                  <button className="message">Message</button>
-                </div>
+              <div className="connect">
+                <button className="follow">Follow</button>
+                <button className="message">Message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="highlight">
+          <span>Highlights</span>
+          <div className="highlightContainer">
+            <div className="courses">
+              <div className="title">Courses</div>
+              <div className="items">
+                <div className="item">COMPSC 732</div>
+                <div className="item">COMPSC 751</div>
+                <div className="item">COMPSC 762</div>
+                <div className="item">COMPSC 752</div>
+                <div className="item">COMPSC 704</div>
+                <div className="item">COMPSC 704</div>
+                <div className="item">COMPSC 704</div>
+                <div className="item">COMPSC 704</div>
+              </div>
+            </div>
+            <div className="skills">
+              <div className="title">Skills</div>
+              <div className="items">
+                <div className="item">JavaScript</div>
+                <div className="item">Python</div>
+                <div className="item">TypeScript</div>
+                <div className="item">MongoDB</div>
+                <div className="item">JavaScript</div>
+                <div className="item">JavaScript</div>
+                <div className="item">JavaScript</div>
+              </div>
             </div>
           </div>
         </div>
