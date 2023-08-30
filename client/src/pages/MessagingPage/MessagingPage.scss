@@ -12,41 +12,81 @@ body {
   height: 100vh;
 }
 
-.header {
-  flex: 1;
-  background-color: darkblue;
-  color: #fff;
-  text-align: center;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 5%;
-  height: 80px;
-  font-family: 'Arial', sans-serif;
-  font-size: 20px;
-}
+@import "../../style.scss";
 
-.header div {
-  margin: 0 10px;
-  /* Add margin to each side for spacing */
-  display: flex;
-  /* Make the container of the links a flex container */
-}
+.navbar {
+  @include themify($themes) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    height: 50px;
+    border-bottom: 1px solid themed("border");
+    position: sticky;
+    top: 0;
+    background-color: themed("bg");
+    color: themed("textColor");
+    z-index: 999;
 
-.header a {
-  color: #fff;
-  margin-left: 20px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 30px;
 
-.header a img {
-  margin-right: 5px;
-  width: 20px;
-  height: 20px;
-}
+      // logo style
+      span {
+        font-weight: bold;
+        font-size: 20px;
+        color: themed("logo");
+      }
+      // SearchBar style
+      .search {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid themed("border");
+        border-radius: 5px;
+        padding: 5px;
+        input {
+          border: none;
+          width: 500px;
+          background: transparent;
+          color: themed("textColor");
 
+          @include mobile{
+            display: none;
+          }
+
+        }
+      }
+    }
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      @include mobile{
+        display: none;
+      }
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 500;
+
+        img {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        // span {
+
+        // }
+      }
+    }
+  }
+}
 .chat-container {
   flex: 8;
   width: 90%;
