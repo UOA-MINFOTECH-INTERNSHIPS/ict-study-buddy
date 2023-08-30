@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Settings.css';
+import './Settings.scss';
 
 function Settings() {
     const [selectedSetting, setSelectedSetting] = useState('Manage My Account');
