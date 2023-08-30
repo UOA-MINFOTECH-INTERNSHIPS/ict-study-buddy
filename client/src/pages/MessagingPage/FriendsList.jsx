@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import './MessagingPage.css';
+import './MessagingPage.scss';
 
 
 function FriendsList({ onSelectFriend }) {
