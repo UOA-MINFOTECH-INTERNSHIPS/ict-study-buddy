@@ -1,6 +1,8 @@
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
+import Settings from "./pages/Settings/Settings";
+import ChatArea from "./pages/MessagingPage/ChatArea";
 import Home from "./pages/home/Home";
 import NavBar from "./components/navbar/NavBar";
 import * as React from "react";
@@ -63,6 +65,14 @@ function App() {
       path: "/register",
       element: <Register />,
     },
+    {
+      path: "/settings",
+      element: <Settings />,
+    },
+    {
+      path: "/message",
+      element: <ChatArea />,
+    }
   ]);
   return (
     <div>
