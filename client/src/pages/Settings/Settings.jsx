@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import './Settings.scss';
+import { DarkModeContext } from "../../context/darkModeContext";
+
+import './settings.scss';
 
 function Settings() {
     const [selectedSetting, setSelectedSetting] = useState('Manage My Account');
@@ -14,7 +16,12 @@ function Settings() {
     const handleEdit = () => {
         setIsEditable(true);
     };
-
+    const preferenceSave = () => {
+        localStorage.setItem("darkMode",darkMode);
+        alert('Save Successfully!');
+        window.location.reload();
+    };
+    
     const handleSave = () => {
         setIsEditable(false);
         alert('Save Successfully!');
@@ -72,7 +79,7 @@ function Settings() {
                                 </div>
                                 <div className="form-row">
                                     <label>Birthday: </label>
-                                    <input type="date" name="birthday" disabled={!isEditable} />
+                                    <input type="date" name="birthday" disabled={!isEditable} style={{"width":"10vw"}} />
                                 </div>
                                 <div className="form-row">
                                     <label>Phone Number: </label>
@@ -85,12 +92,14 @@ function Settings() {
                                 <div className="form-row">
                                     <label>Address: </label>
                                     <input type="text" placeholder="Street" name="street" disabled={!isEditable} />
+                                    <span> - </span>
                                     <input type="text" placeholder="City" name="city" disabled={!isEditable} />
+                                    <span> - </span>
                                     <input type="text" placeholder="State" name="state" disabled={!isEditable} />
                                 </div>
                                 <div className="form-row">
                                     <label>Overview: </label>
-                                    <textarea name="overview" disabled={!isEditable}></textarea>
+                                    <textarea name="overview" disabled={!isEditable} style={{"vertical-align": "top"}}></textarea>
                                 </div>
                                 <div className="form-row">
                                     <label>Roles: </label>
@@ -110,8 +119,8 @@ function Settings() {
                             </form>
 
                         </form>
-                        <button onClick={handleEdit} disabled={isEditable}>Edit</button>
-                        <button onClick={handleSave} disabled={!isEditable}>Save</button>
+                        <button onClick={handleEdit} disabled={isEditable} className="btn_edit">Edit</button>
+                        <button onClick={handleSave} disabled={!isEditable} className="btn_submit">Save</button>
                     </div>
                 )}
 
@@ -151,8 +160,8 @@ function Settings() {
                                 <input type="checkbox" onChange={toggleDarkMode} />
                             </div>
                         </form>
-                        <button onClick={handleEdit} disabled={isEditable}>Edit</button>
-                        <button onClick={handleSave} disabled={!isEditable}>Save</button>
+                        <button onClick={handleEdit} disabled={isEditable} className="btn_edit">Edit</button>
+                        <button onClick={preferenceSave} disabled={!isEditable} className="btn_submit">Save</button>
                     </div>
                 )}
 
