@@ -1,16 +1,54 @@
 
+@import "../../style.scss";
+
 body {
   font-family: 'Arial', sans-serif;
-  background-color: whitesmoke;
   margin: 0;
   padding: 0;
   color: #333;
   display: flex;
   flex-direction: column;
   height: 100vh;
+  @include themify($themes) {
+    background-color: themed("bgSoft");
+    color: themed("textColor");
+  }
 }
-
-@import "../../style.scss";
+.messageBoxMain{
+  padding: 2vw;
+  @include themify($themes) {
+    background-color: themed("bgSoft");
+    color: themed("textColor");
+  }
+}
+.messageBox{
+  display: flex;
+  padding: 1vw;
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
+  background: white;
+  box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+  border-radius: 20px;
+ 
+}
+.chatBox{
+  width: 70%;
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
+}
+.friendBox{
+  width: 30%;
+  height: 90vh;
+  background-color: white;
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
+}
 
 .navbar {
   @include themify($themes) {
@@ -107,11 +145,16 @@ body {
 .chat-area {
   flex: 1;
   background-color: #fff;
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
   /* White background */
   border-left: 2px solid #ccc;
   /* No border */
   display: flex;
   flex-direction: column;
+  height: 80vh;
   /* Stack children vertically */
 }
 
@@ -221,6 +264,10 @@ body {
   overflow-y: auto;
   /* Allow scrolling for chat messages */
   position: relative;
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
 }
 
 .block-notice {
@@ -276,6 +323,10 @@ body {
   border-radius: 5%;
   overflow-y: auto;
   z-index: 1000;
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
 }
 
 .group-info-popup {
@@ -376,6 +427,10 @@ body {
   font-size: 16px;
   color: #333;
 
+  @include themify($themes) {
+    color: black;
+  }
+
   /* Remove the default outline and border on focus */
   outline: none;
 
@@ -411,7 +466,7 @@ body {
 }
 
 .friends-list {
-  width: 30%;
+  width: 100%;
   overflow-x: hidden;
 }
 
@@ -448,6 +503,7 @@ body {
   /* Adjusted font size */
   font-family: 'Arial', sans-serif;
   color: #333;
+  background: none;
 }
 
 
@@ -503,7 +559,7 @@ body {
 
 .friend-area {
   width: 100%;
-  height: 400px;
+  height: 50vh;
   /* Set a fixed height or adjust as needed */
   overflow-y: scroll;
   /* Show vertical scrollbar when content overflows */
