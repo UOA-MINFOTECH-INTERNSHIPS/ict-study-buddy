@@ -1,6 +1,7 @@
 import "./navbar.scss";
 import * as React from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -9,8 +10,14 @@ import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
 import photo from "../../assets/register-background-pic.jpg";
+import { useContext } from "react";
+
+import { DarkModeContext } from "../../context/darkModeContext";
+
 
 function NavBar(props) {
+  const { toggle, darkMode } = useContext(DarkModeContext);
+
   return (
     <div className="navbar">
       <div className="left">
@@ -19,7 +26,16 @@ function NavBar(props) {
         </Link>
         <HomeOutlinedIcon />
 
-        <WbSunnyOutlinedIcon style={{ cursor: "pointer" }} />
+        {darkMode ? (
+          <DarkModeOutlinedIcon
+            onClick={toggle}
+            style={{ cursor: "pointer" }}
+          />
+        ) : (
+          <WbSunnyOutlinedIcon onClick={toggle} style={{ cursor: "pointer" }} />
+        )}
+
+        {/* <WbSunnyOutlinedIcon style={{ cursor: "pointer" }} /> */}
 
         <GridViewOutlinedIcon />
         <div className="search">
