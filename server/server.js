@@ -7,6 +7,8 @@ import cors from "cors";
 import helmt from "helmet";
 import morgan from "morgan";
 import authRoute from "./routes/auth.js";
+import userRoute from "./routes/users.js";
+
 
 
 
@@ -22,6 +24,8 @@ app.use(morgan("common"));
 
 
 app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+
 
 
 // Start the server running. Once the server is running, the given function will be called, which will
