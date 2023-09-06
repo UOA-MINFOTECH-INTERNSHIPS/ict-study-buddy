@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import helmt from "helmet";
 import morgan from "morgan";
+import authRoute from "./routes/auth.js";
+
 
 
 //Setup Express
@@ -19,6 +21,7 @@ app.use(helmt());
 app.use(morgan("common"));
 
 
+app.use("/api/auth", authRoute);
 
 
 // Start the server running. Once the server is running, the given function will be called, which will
