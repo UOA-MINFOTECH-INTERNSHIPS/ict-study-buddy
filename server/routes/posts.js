@@ -45,4 +45,35 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// GET PROFILE POST OR COMMUNITY POST BASED ON IF USERNAME EXISTED
+router.get("/:identifier", async (req, res) => {
+  try {
+    const identifier = req.params.identifier;
+    console.log("identifier", identifier);
+
+    let posts;
+    // GET COMMUNITY POST
+    if (identifier.length === 24) {
+      const currentUser = await User.findById(identifier);
+      const followingIds = currentUser.followings;
+      posts = await Post.find({
+        userId: { $in: [currentUser._id, ...followingIds] },
+      }).sort({ createdAt: -1 });
+    }
+    // GET PROFILE POST
+    else {
+      const user = await User.findOne({ userName: identifier });
+      posts = await Post.find({ userId: user._id });
+    }
+
+    if (!posts) {
+      return res.status(404).json({ message: "Posts not found" });
+    }
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 export default router;
