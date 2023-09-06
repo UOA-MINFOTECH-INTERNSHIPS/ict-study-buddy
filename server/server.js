@@ -8,9 +8,7 @@ import helmt from "helmet";
 import morgan from "morgan";
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/users.js";
-
-
-
+import postRoute from "./routes/posts.js";
 
 //Setup Express
 const app = express();
@@ -22,11 +20,9 @@ app.use(cors());
 app.use(helmt());
 app.use(morgan("common"));
 
-
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
-
-
+app.use("/api/post", postRoute);
 
 // Start the server running. Once the server is running, the given function will be called, which will
 // log a simple message to the server console. Any console.log() statements in your node.js code
