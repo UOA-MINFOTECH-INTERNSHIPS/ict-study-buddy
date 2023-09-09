@@ -1,4 +1,3 @@
-
 @import "../../style.scss";
 
 body {
@@ -9,129 +8,65 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+
   @include themify($themes) {
     background-color: themed("bgSoft");
     color: themed("textColor");
   }
 }
-.messageBoxMain{
+
+.messageBoxMain {
   padding: 2vw;
+
   @include themify($themes) {
     background-color: themed("bgSoft");
     color: themed("textColor");
   }
 }
-.messageBox{
+
+.messageBox {
   display: flex;
   padding: 1vw;
+
   @include themify($themes) {
     background-color: themed("bg");
     color: themed("textColor");
   }
+
   background: white;
   box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
   border-radius: 20px;
- 
+
 }
-.chatBox{
+
+.chatBox {
   width: 70%;
+  max-height: 80vh;
+
   @include themify($themes) {
     background-color: themed("bg");
     color: themed("textColor");
   }
 }
-.friendBox{
+
+.friendBox {
   width: 30%;
-  height: 90vh;
+  max-height: 80vh;
   background-color: white;
+
   @include themify($themes) {
     background-color: themed("bg");
     color: themed("textColor");
   }
 }
 
-.navbar {
-  @include themify($themes) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    height: 50px;
-    border-bottom: 1px solid themed("border");
-    position: sticky;
-    top: 0;
-    background-color: themed("bg");
-    color: themed("textColor");
-    z-index: 999;
 
-    .left {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-
-      // logo style
-      span {
-        font-weight: bold;
-        font-size: 20px;
-        color: themed("logo");
-      }
-      // SearchBar style
-      .search {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        border: 1px solid themed("border");
-        border-radius: 5px;
-        padding: 5px;
-        input {
-          border: none;
-          width: 500px;
-          background: transparent;
-          color: themed("textColor");
-
-          @include mobile{
-            display: none;
-          }
-
-        }
-      }
-    }
-    .right {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-      @include mobile{
-        display: none;
-      }
-
-      .user {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 500;
-
-        img {
-          width: 30px;
-          height: 30px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-        // span {
-
-        // }
-      }
-    }
-  }
-}
 .chat-container {
   flex: 8;
   width: 90%;
-  height: 90%;
   margin: 2% auto;
-  /* Add vertical margin to separate from header/footer */
   background-color: #fff;
   border-radius: 5px;
-  border: 2px solid darkblue;
   /* Blue border */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   /* Subtle shadow for a tech feel */
@@ -140,22 +75,29 @@ body {
   /* Font to match the header */
   color: black;
   /* Font color to match the header */
+  min-height: 95vh;
+
+  @include themify($themes) {
+    background-color: themed("bgSoft");
+    color: themed("textColor"),
+  }
 }
 
 .chat-area {
   flex: 1;
   background-color: #fff;
+
   @include themify($themes) {
     background-color: themed("bg");
     color: themed("textColor");
   }
+
   /* White background */
   border-left: 2px solid #ccc;
   /* No border */
   display: flex;
   flex-direction: column;
   height: 80vh;
-  /* Stack children vertically */
 }
 
 .chat-person {
@@ -176,7 +118,8 @@ body {
 
 .chat-person-avatar {
   flex: 1;
-  max-width: 30%;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -192,14 +135,20 @@ body {
 
 }
 
-.chat-person-status,
-.chat-person-time {
-  text-align: left;
-  font-size: 14px;
+.chat-person-details {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  padding: 10px
 }
 
+.chat-person-status,
 .chat-person-time {
-  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px
 }
 
 .right-section {
@@ -232,11 +181,13 @@ body {
   position: absolute;
   width: 150px;
   right: 0;
-  border: 1px solid lightgray; /* 淡灰色边框 */
-  border-radius: 5px; /* 圆角 */
+  border: 1px solid lightgray;
+  /* 淡灰色边框 */
+  border-radius: 5px;
+  /* 圆角 */
   background-color: white;
   color: gray;
-  z-index: 1000; 
+  z-index: 1000;
 }
 
 .menu-item {
@@ -247,11 +198,12 @@ body {
 }
 
 .menu-item:hover {
-  background-color: #f0f0f0; /* 鼠标上浮时的底色 */
+  background-color: #f0f0f0;
+  /* 鼠标上浮时的底色 */
   cursor: pointer;
 }
 
-.menu-button.active + .dropdown-menu,
+.menu-button.active+.dropdown-menu,
 .dropdown-menu.active {
   display: block;
 }
@@ -264,6 +216,7 @@ body {
   overflow-y: auto;
   /* Allow scrolling for chat messages */
   position: relative;
+
   @include themify($themes) {
     background-color: themed("bg");
     color: themed("textColor");
@@ -278,14 +231,15 @@ body {
   color: darkred;
   font-size: 14px;
 }
+
 .blocked {
-  background-color: #ccc; 
+  background-color: #ccc;
 }
 
 .disabled-input textarea {
-  background-color: #ccc; 
-  cursor: not-allowed; 
-  pointer-events: none; 
+  background-color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 
@@ -293,7 +247,7 @@ body {
   display: flex;
   flex-direction: column-reverse;
   overflow-y: auto;
-  align-items: flex-end; 
+  align-items: flex-end;
   color: #333;
 }
 
@@ -301,11 +255,12 @@ body {
   background-color: #DCF8C6;
   border-radius: 5px;
   padding: 5px;
-  margin: 2px 30px; 
+  margin: 2px 30px;
   min-width: 10%;
   max-width: 60%;
   word-wrap: break-word;
 }
+
 
 
 
@@ -321,27 +276,35 @@ body {
   border-right: 1px solid #ccc;
   box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.2);
   border-radius: 5%;
-  overflow-y: auto;
+  overflow-y: hidden;
   z-index: 1000;
+
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+    position: relative;
+    padding: 20px;
+  }
+}
+
+.group-info-title {
+  text-align: center;
+  font-size: 24px;
+
   @include themify($themes) {
     background-color: themed("bg");
     color: themed("textColor");
   }
 }
 
-.group-info-popup {
-  position: relative;
-  padding:20px;
-}
-
-.group-info-title {
-  text-align: center;
-  font-size: 24px;
-}
-
 .group-info-header {
   display: flex;
   align-items: center;
+
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
 }
 
 .group-avatar {
@@ -368,14 +331,22 @@ body {
   display: flex;
   align-items: center;
   margin-top: 10px;
+
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
 }
 
 .exit-group-btn {
   display: block;
   margin: 20px auto;
-  padding: 10px 20px;
-  border: 2px solid lightgray;
-  background-color: white;
+  padding: 5px 30px;
+  border-radius: 15px;
+  border: 2px solid #8095ff;
+  background-color: #8095ff;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
 }
 
@@ -479,9 +450,12 @@ body {
   margin-bottom: 20px;
   /* Increase space below the header */
   padding: 15px 10px;
+
   /* Add some vertical padding */
-  border-bottom: 2px solid darkblue;
-  /* Add a thick gray border to the bottom */
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
 }
 
 .search-box {
@@ -494,8 +468,11 @@ body {
   padding: 5px;
   height: 40px;
   font-family: 'Arial', sans-serif;
-  color: #333;
-  /* Adjust based on the university's search box font color */
+
+  @include themify($themes) {
+    background-color: themed("bg");
+    color: themed("textColor");
+  }
 }
 
 .search-box input {
@@ -547,7 +524,7 @@ body {
   position: absolute;
   border: 1px solid lightgray;
   width: 100%;
-  display: none;  
+  display: none;
 }
 
 .search-dropdown-item {
@@ -559,7 +536,7 @@ body {
 
 .friend-area {
   width: 100%;
-  height: 50vh;
+  height: 100%;
   /* Set a fixed height or adjust as needed */
   overflow-y: scroll;
   /* Show vertical scrollbar when content overflows */
@@ -581,12 +558,11 @@ body {
 .friend-item:hover {
   cursor: pointer;
   /* Change cursor to hand on hover */
-  background-color: lightcyan;
-  /* Light blue background color */
+  background-color: rgba(153, 173, 244, 0.5);
 }
 
 .friend-item.selected {
-  background-color: lightcyan;
+  background-color: rgba(153, 173, 244, 0.5);
 }
 
 /* Style for the scrollbar */
@@ -626,8 +602,11 @@ body {
 }
 
 .unread-messages {
-  background-color: palevioletred;
-  /* Blue background */
+  @include themify($themes) {
+    background-color: themed("bgSoft");
+    color: themed("textColor");
+  }
+
   color: #fff;
   /* White text */
   border-radius: 50%;
@@ -636,4 +615,14 @@ body {
   /* Some padding */
   margin: 10px 20px;
   /* Some margin below the unread messages count */
+}
+
+@media (max-width: 768px) {
+  .chatBox {
+    width: 100%;
+  }
+
+  .friendBox {
+    width: 100%;
+  }
 }
