@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import './MessagingPage.scss';
-
+import './messaging.scss';
+import sendIcon from '../../assets/send.png';  
+import emojIcon from '../../assets/happy.png'; 
+import fileIcon from '../../assets/file_upload.png';
+import moreIcon from '../../assets/more.png';
+import blockIcon from '../../assets/block.png';
+import profileIcon from '../../assets/seeprofile.png';
+import groupIcon from '../../assets/group.png';
 
 function ChatArea({ selectedFriend }) {
     const [messages, setMessages] = useState([]);
@@ -47,7 +53,7 @@ function ChatArea({ selectedFriend }) {
         <div className="chat-area">
             <div className="chat-person">
                 <div className="chat-person-left">
-                    <img className="chat-person-avatar" src="./group.png" alt="Friend Avatar" />
+                    <img className="chat-person-avatar" src={groupIcon} alt="Friend Avatar" />
                     <div className="chat-person-details">
                     {selectedFriend}
                     </div>
@@ -65,15 +71,15 @@ function ChatArea({ selectedFriend }) {
                 <div className="right-section">
                     <div className="chat-person-menu">
                         <button className="menu-button" onClick={toggleMenu}>
-                            <img src="./more.png" alt="Menu" />
+                            <img src={moreIcon} alt="Menu" />
                         </button>
                         <div className={`dropdown-menu ${menuActive ? 'active' : ''}`} onMouseLeave={handleMouseLeave}>
                             <div className="menu-item" onClick={blockUser}>
-                                <img src="./block.png" alt="Block" /> Block Chat
+                                <img src={blockIcon} alt="Block" /> Block Chat
                             </div>
 
                             <div className="menu-item" onClick={handleSeeProfileClick}>
-                                <img src="./seeprofile.png" alt="Profile" /> See Profile
+                                <img src={profileIcon} alt="Profile" /> See Profile
 
                             </div>
                         </div>
@@ -100,7 +106,7 @@ function ChatArea({ selectedFriend }) {
 
                         {/* Avatar and Group Name */}
                         <div className="group-info-header">
-                            <img className="group-avatar" src="./group.png" alt="Group Avatar" />
+                            <img className="group-avatar" src={groupIcon} alt="Group Avatar" />
                             <div className="group-name">
                                 Group：COMPSCI732
                             </div>
@@ -150,12 +156,12 @@ function ChatArea({ selectedFriend }) {
 
             <div className={`chat-input ${isBlocked ? 'disabled-input' : ''}`}>
                 <label htmlFor="emoji">
-                    <img src="./happy.png" alt="Send emoji" />
+                    <img src={emojIcon} alt="Send emoji" />
                 </label>
                 <input id="emoji" type="file" style={{ display: 'none' }} />
 
                 <label htmlFor="file-input">
-                    <img src="./file_upload.png" alt="File Icon" />
+                    <img src={fileIcon} alt="File Icon" />
                 </label>
                 <input id="file-input" type="file" style={{ display: 'none' }} />
 
@@ -166,7 +172,7 @@ function ChatArea({ selectedFriend }) {
                 ></textarea>
 
                 <button className="send_message" onClick={handleSend}>
-                    <img src="./send.png" alt="Send" />
+                    <img src={sendIcon} alt="Send" />
                 </button>
             </div>
 
