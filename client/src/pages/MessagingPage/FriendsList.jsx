@@ -1,6 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import './MessagingPage.scss';
+import './messaging.scss';
+import searchIcon from '../../assets/search.png';
+import groupIcon from '../../assets/group.png';
+import happyIcon from '../../assets/happy.png';
 
 
 function FriendsList({ onSelectFriend }) {
@@ -14,42 +17,42 @@ function FriendsList({ onSelectFriend }) {
     const friendsData = [
         {
             name: 'John Smith',
-            avatar: './happy.png',
+            avatar: happyIcon,
             lastMessage: 'Hey! How are you?',
             unreadMessages: 1,
             lastMessageTime: 'Mon'
         },
         {
             name: 'Lily Harrison',
-            avatar: './happy.png',
+            avatar: happyIcon,
             lastMessage: 'Nice to meet you!',
             unreadMessages: 2,
             lastMessageTime: '18/08'
         },
         {
             name: 'Group：COMPSCI732',
-            avatar: './group.png',
+            avatar: groupIcon,
             lastMessage: 'Hello！Everybody！',
             unreadMessages: 5,
             lastMessageTime: '17/08'
         },
         {
             name: 'Joshua Wong',
-            avatar: './happy.png',
+            avatar: happyIcon,
             lastMessage: 'Morning',
             unreadMessages: 2,
             lastMessageTime: '01/08'
         },
         {
             name: 'Group：COMPSCI701',
-            avatar: './group.png',
+            avatar: groupIcon,
             lastMessage: '',
             unreadMessages: 2,
             lastMessageTime: '20/07'
         },
         {
             name: 'Iris Lee',
-            avatar: './happy.png',
+            avatar: happyIcon,
             lastMessage: 'Morning',
             unreadMessages: 1,
             lastMessageTime: '01/06'
@@ -77,7 +80,7 @@ function FriendsList({ onSelectFriend }) {
 
             <div className="search-box">
                 <label htmlFor="friend-search">
-                    <img src="./search.png" alt="Search Icon" />
+                    <img src={searchIcon} alt="Search Icon" />
                 </label>
                 <input id="friend-search" type="text" placeholder="Search for friends..." onInput={showDropdown} />
                 {dropdownVisible && (
