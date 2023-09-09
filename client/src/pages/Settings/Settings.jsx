@@ -17,11 +17,11 @@ function Settings() {
         setIsEditable(true);
     };
     const preferenceSave = () => {
-        localStorage.setItem("darkMode",darkMode);
+        localStorage.setItem("darkMode", darkMode);
         alert('Save Successfully!');
         window.location.reload();
     };
-    
+
     const handleSave = () => {
         setIsEditable(false);
         alert('Save Successfully!');
@@ -65,30 +65,36 @@ function Settings() {
                         <div className="form-header">Account Information</div>
                         <form>
                             <form>
-                                <div className="form-row">
-                                    <label>Firstname: </label>
-                                    <input type="text" name="firstname" disabled={!isEditable} />
+                                <div className="form-row-group">
+                                    <div className="form-row">
+                                        <label>Firstname: </label>
+                                        <input type="text" name="firstname" disabled={!isEditable} />
+                                    </div>
+                                    <div className="form-row">
+                                        <label>Lastname: </label>
+                                        <input type="text" name="lastname" disabled={!isEditable} />
+                                    </div>
                                 </div>
+
                                 <div className="form-row">
-                                    <label>Lastname: </label>
-                                    <input type="text" name="lastname" disabled={!isEditable} />
+                                    <label>Username: <span className="required">*</span></label>
+                                    <input type="text" name="username" disabled={!isEditable} required />
                                 </div>
-                                <div className="form-row">
-                                    <label>Username: </label>
-                                    <input type="text" name="username" disabled={!isEditable} />
-                                </div>
+
+
                                 <div className="form-row">
                                     <label>Birthday: </label>
-                                    <input type="date" name="birthday" disabled={!isEditable} style={{"width":"10vw"}} />
+                                    <input type="date" name="birthday" disabled={!isEditable} style={{ "width": "10vw" }} />
                                 </div>
                                 <div className="form-row">
                                     <label>Phone Number: </label>
                                     <input type="tel" name="phoneNumber" disabled={!isEditable} />
                                 </div>
                                 <div className="form-row">
-                                    <label>Email: </label>
-                                    <input type="email" name="email" disabled={!isEditable} />
+                                    <label>Email: <span className="required">*</span></label>
+                                    <input type="email" name="email" disabled={!isEditable} required />
                                 </div>
+
                                 <div className="form-row">
                                     <label>Address: </label>
                                     <input type="text" placeholder="Street" name="street" disabled={!isEditable} />
@@ -99,7 +105,7 @@ function Settings() {
                                 </div>
                                 <div className="form-row">
                                     <label>Overview: </label>
-                                    <textarea name="overview" disabled={!isEditable} style={{"vertical-align": "top"}}></textarea>
+                                    <textarea name="overview" disabled={!isEditable} style={{ "vertical-align": "top" }}></textarea>
                                 </div>
                                 <div className="form-row">
                                     <label>Roles: </label>
