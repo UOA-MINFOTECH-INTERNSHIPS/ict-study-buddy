@@ -1,8 +1,8 @@
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
-import Settings from "./pages/Settings/Settings";
-import ChatArea from "./pages/MessagingPage/ChatArea";
+import Settings from "./pages/settings/Settings";
+import Messaging from "./pages/messaging/Messaging";
 import Home from "./pages/home/Home";
 import NavBar from "./components/navbar/NavBar";
 import * as React from "react";
@@ -17,12 +17,12 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
 
+
 function App() {
   const { currentUser } = useContext(AuthContext);
-
   const { darkMode } = useContext(DarkModeContext);
 
-  const Layout = () => {
+  const Layout = ({ children }) => {
     return (
       <div className={`theme-${darkMode ? "dark" : "light"}`}>
         <NavBar />
@@ -32,48 +32,25 @@ function App() {
   };
 
   const ProtectedRoute = ({ children }) => {
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
+    console.log("currentUser:", currentUser);
     return children;
   };
 
   const router = createBrowserRouter([
+    { path: '/login', element: <Login /> },
+    { path: '/register', element: <Register /> },
     {
-      path: "/",
-      element: (
-        <ProtectedRoute>
-          <Layout />
-        </ProtectedRoute>
-      ),
+      path: '/',
+      element: <Layout />, 
       children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/profile/:id",
-          element: <Profile />,
-        },
+        { path: '/', element: <ProtectedRoute><Home /></ProtectedRoute> },
+        { path: 'profile', element: <ProtectedRoute><Profile /></ProtectedRoute> },
+        { path: 'messaging', element: <ProtectedRoute><Messaging /></ProtectedRoute> },
+        { path: 'settings', element: <ProtectedRoute><Settings /></ProtectedRoute> },
       ],
     },
-    {
-      path: "/login",
-      element: <Login />,
-    },
-    {
-      path: "/register",
-      element: <Register />,
-    },
-    {
-      path: "/settings",
-      element: <Settings />,
-    },
-    {
-      path: "/message",
-      element: <ChatArea />,
-    }
   ]);
+
   return (
     <div>
       <RouterProvider router={router} />
