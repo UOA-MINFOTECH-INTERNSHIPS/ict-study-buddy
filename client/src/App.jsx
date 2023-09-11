@@ -1,8 +1,6 @@
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
-import Settings from "./pages/settings/Settings";
-import Messaging from "./pages/messaging/Messaging";
 import Home from "./pages/home/Home";
 import NavBar from "./components/navbar/NavBar";
 import * as React from "react";
@@ -16,41 +14,73 @@ import {
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
-
+import { QueryClient, QueryClientProvider } from "react-query";
+import Messaging from './pages/MessagingPage/Messaging';
+import Settings from './pages/Settings/Settings';
 
 function App() {
   const { currentUser } = useContext(AuthContext);
+
   const { darkMode } = useContext(DarkModeContext);
 
-  const Layout = ({ children }) => {
+  // Create a client
+  const queryClient = new QueryClient();
+
+  const Layout = () => {
     return (
-      <div className={`theme-${darkMode ? "dark" : "light"}`}>
-        <NavBar />
-        <Outlet />
-      </div>
+      <QueryClientProvider client={queryClient}>
+        <div className={`theme-${darkMode ? "dark" : "light"}`}>
+          <NavBar />
+          <Outlet />
+        </div>
+      </QueryClientProvider>
     );
   };
 
   const ProtectedRoute = ({ children }) => {
-    console.log("currentUser:", currentUser);
+    if (!currentUser) {
+      return <Navigate to="/login" />;
+    }
     return children;
   };
 
   const router = createBrowserRouter([
-    { path: '/login', element: <Login /> },
-    { path: '/register', element: <Register /> },
     {
-      path: '/',
-      element: <Layout />, 
+      path: "/",
+      element: (
+        <ProtectedRoute>
+          <Layout />
+        </ProtectedRoute>
+      ),
       children: [
-        { path: '/', element: <ProtectedRoute><Home /></ProtectedRoute> },
-        { path: 'profile', element: <ProtectedRoute><Profile /></ProtectedRoute> },
-        { path: 'messaging', element: <ProtectedRoute><Messaging /></ProtectedRoute> },
-        { path: 'settings', element: <ProtectedRoute><Settings /></ProtectedRoute> },
+        {
+          path: "/",
+          element: <Home />,
+        },
+        {
+          path: "/profile/:username",
+          element: <Profile />,
+        },
+        {
+          path: "/messaging",
+          element: <Messaging />,
+        },
+        {
+          path: "/settings",
+          element: <Settings />,
+        },
+
       ],
     },
+    {
+      path: "/login",
+      element: <Login />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
+    },
   ]);
-
   return (
     <div>
       <RouterProvider router={router} />
