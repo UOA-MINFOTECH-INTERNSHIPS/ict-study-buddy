@@ -11,12 +11,13 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
 import photo from "../../assets/register-background-pic.jpg";
 import { useContext } from "react";
-
+import { AuthContext } from "../../context/authContext";
 import { DarkModeContext } from "../../context/darkModeContext";
-
 
 function NavBar(props) {
   const { toggle, darkMode } = useContext(DarkModeContext);
+
+  const { currentUser } = useContext(AuthContext);
 
   return (
     <div className="navbar">
@@ -24,7 +25,9 @@ function NavBar(props) {
         <Link to="/" style={{ textDecoration: "none" }}>
           <span>Study Buddy</span>
         </Link>
-        <HomeOutlinedIcon />
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <HomeOutlinedIcon className="homebutton" />
+        </Link>
 
         {darkMode ? (
           <DarkModeOutlinedIcon
@@ -34,8 +37,6 @@ function NavBar(props) {
         ) : (
           <WbSunnyOutlinedIcon onClick={toggle} style={{ cursor: "pointer" }} />
         )}
-
-        {/* <WbSunnyOutlinedIcon style={{ cursor: "pointer" }} /> */}
 
         <GridViewOutlinedIcon />
         <div className="search">
@@ -48,8 +49,8 @@ function NavBar(props) {
         <MessageOutlinedIcon />
         <NotificationsOutlinedIcon />
         <div className="user">
-          <img src={photo} />
-          <span>Jenny</span>
+          <img src={currentUser.profilePic} />
+          <span>{currentUser.userName}</span>
         </div>
       </div>
     </div>
