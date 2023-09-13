@@ -16,7 +16,7 @@ function LeftBar(props) {
         <div className="menu">
           <div className="user">
             <PersonOutlinedIcon />
-            <span>{currentUser.name}</span>
+            <span>{currentUser.userName}</span>
           </div>
           <div className="item">
             <GroupIcon />
