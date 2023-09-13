@@ -1,5 +1,6 @@
 import express from "express";
 import { Post } from "../db/post-schema.js";
+import { User } from "../db/user-schema.js";
 
 const router = express.Router();
 
@@ -28,7 +29,6 @@ router.delete("/:id", async (req, res) => {
     return res.status(500).json(error);
   }
 });
-
 
 // UPDATE A POST
 router.put("/:id", async (req, res) => {
@@ -70,7 +70,7 @@ router.get("/:identifier", async (req, res) => {
       return res.status(404).json({ message: "Posts not found" });
     }
 
-    res.status(200).json(posts);
+    res.status(200).json(posts); 
   } catch (error) {
     res.status(500).json(error);
   }
