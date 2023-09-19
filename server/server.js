@@ -9,6 +9,7 @@ import morgan from "morgan";
 import authRoute from "./routes/auth.js";
 import userRoute from "./routes/users.js";
 import postRoute from "./routes/posts.js";
+import cookieParser from "cookie-parser";
 
 //Setup Express
 const app = express();
@@ -24,6 +25,7 @@ app.use(
   );
 app.use(helmt());
 app.use(morgan("common"));
+app.use(cookieParser());
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
