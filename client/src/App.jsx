@@ -14,10 +14,9 @@ import {
 import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Messaging from './pages/MessagingPage/Messaging';
 import Settings from './pages/Settings/Settings';
-
 function App() {
   const { currentUser } = useContext(AuthContext);
 
@@ -61,15 +60,14 @@ function App() {
           path: "/profile/:username",
           element: <Profile />,
         },
-        {
-          path: "/messaging",
-          element: <Messaging />,
-        },
-        {
-          path: "/settings",
-          element: <Settings />,
-        },
-
+        // {
+        //   path: "/messaging",
+        //   element: <Messaging />,
+        // },
+        // {
+        //   path: "/settings",
+        //   element: <Settings />,
+        // },
       ],
     },
     {

@@ -6,8 +6,8 @@ const router = express.Router();
 
 // CREATE A POST
 router.post("/", async (req, res) => {
-  const token = req.cookies.accessToken;
-  console.log('token', token);
+  // const token = req.cookies.accessToken;
+  // console.log('token', token);
   const newPost = new Post(req.body);
   try {
     const Post = await newPost.save();

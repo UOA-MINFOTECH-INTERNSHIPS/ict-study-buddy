@@ -7,11 +7,13 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Comments from "../comments/Comments";
 import { useState } from "react";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import moment from "moment";
 
 function Post({ post }) {
+  const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+
   const [commentOpen, setCommentOpen] = useState(false);
 
   const [liked, setLiked] = useState(false);
@@ -32,6 +34,7 @@ function Post({ post }) {
   const handleClick = () => {
     setLiked(!liked);
   };
+
   return (
     <div className="post">
       <div className="container">
@@ -60,9 +63,14 @@ function Post({ post }) {
           {/* Post content */}
           <p>{post.desc}</p>
           {/* Post Images */}
-          <img src={post.img} alt="" />
+          <img src={`${PF}${post.img}`} alt="" />
           {/* Tags  */}
-          {post.tags && post.tags.map((tag) => <p className="tags">#{tag}</p>)}
+          {post.tags &&
+            post.tags.map((tag, i) => (
+              <p className="tags" key={i}>
+                #{tag}
+              </p>
+            ))}
         </div>
         <div className="info">
           <div className="item" onClick={handleClick}>
