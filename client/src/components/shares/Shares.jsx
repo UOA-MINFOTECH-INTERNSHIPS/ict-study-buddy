@@ -8,6 +8,7 @@ import TagIcon from "@mui/icons-material/Tag";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
+import Tag from "../tags/Tag";
 
 function Shares(props) {
   const { currentUser } = useContext(AuthContext);
@@ -19,7 +20,7 @@ function Shares(props) {
   const upload = async (formData) => {
     try {
       const res = await makeRequest.post("/upload", formData);
-      console.log('upload response', res);
+      console.log("upload response", res);
       return res.data;
     } catch (err) {
       console.error(err);
@@ -34,7 +35,7 @@ function Shares(props) {
     let imgUrl = "";
     if (file) {
       imgUrl = await upload(formData);
-      console.log('imgUrl', imgUrl);
+      console.log("imgUrl", imgUrl);
     }
 
     // Create the post
@@ -43,9 +44,9 @@ function Shares(props) {
       desc: data.desc,
       img: imgUrl,
     };
-    console.log('newPost',newPost);
+    console.log("newPost", newPost);
     const response = await makeRequest.post("/post", newPost);
-    console.log('post success', response.data);
+    console.log("post success", response.data);
     return response.data;
   };
 
@@ -95,24 +96,20 @@ function Shares(props) {
           <div className="attachment">
             {/* Add study attachments */}
             <div className="left">
+              {/* Add Course Tags or Skills Tags */}
               <div className="item">
-                <input
-                  type="file"
-                  id="file"
-                  onChange={handleFileUpload}
-                  // multiple
-                />
+                {/* <input type="file" id="file" /> */}
+                {/* <label htmlFor="tag">
+                  <TagIcon />
+                  <span htmlFor="tag">Add Tags</span>
+                </label> */}
+                <Tag/>
+              </div>
+              <div className="item">
+                <input type="file" id="file" onChange={handleFileUpload} />
                 <label htmlFor="file">
                   <InsertPhotoIcon />
                   <span htmlFor="file">Add File</span>
-                </label>
-              </div>
-              {/* Add Course Tags or Skills Tags */}
-              <div className="item">
-                <input type="file" id="file" />
-                <label htmlFor="file">
-                  <TagIcon />
-                  <span htmlFor="file">Add Tags</span>
                 </label>
               </div>
             </div>
