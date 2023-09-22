@@ -1,10 +1,9 @@
 import * as dotenv from "dotenv";
 dotenv.config();
 
+import * as url from "url";
 import express from "express";
-import { fileURLToPath } from "url";
 import path from "path";
-import { dirname } from "path";
 import mongoose from "mongoose";
 import cors from "cors";
 import helmt from "helmet";
@@ -13,13 +12,11 @@ import multer from "multer";
 import userRoute from "./routes/users.js";
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/posts.js";
+import courseRoute from "./routes/course.js";
 import cookieParser from "cookie-parser";
 //Setup Express
 const app = express();
 const port = process.env.PORT || 3000;
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 //Middleware
 // Setup JSON parsing for the request body
@@ -50,6 +47,10 @@ const storage = multer.diskStorage({
   },
 });
 
+// Make the "public" folder available statically
+const dirname = url.fileURLToPath(new URL(".", import.meta.url));
+app.use("/images", express.static(path.join(dirname, "public/images")));
+
 //Set up upload file api
 const upload = multer({ storage: storage });
 
@@ -62,12 +63,11 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   }
 });
 
-app.use("/images", express.static(path.join(__dirname, "public/images")));
-
 // Setup API routes.
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
+app.use("/api/course", courseRoute);
 
 // Start the server running. Once the server is running, the given function will be called, which will
 // log a simple message to the server console. Any console.log() statements in your node.js code
