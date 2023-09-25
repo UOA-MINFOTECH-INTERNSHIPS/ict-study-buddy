@@ -53,7 +53,8 @@
 
         .left {
           display: flex;
-          align-items: center;
+          // align-items: center;
+          align-items: flex-end;
           gap: 20px;
           .item {
             padding: 5px;

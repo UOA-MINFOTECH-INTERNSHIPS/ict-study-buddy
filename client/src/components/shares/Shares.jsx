@@ -4,14 +4,34 @@ import { AuthContext } from "../../context/authContext";
 import "./share.scss";
 import { Link } from "react-router-dom";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
-import TagIcon from "@mui/icons-material/Tag";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-import Tag from "../tags/Tag";
+import SimpleDialog from "../tags/Tag";
+import TagIcon from "@mui/icons-material/Tag";
+import Typography from "@mui/material/Typography";
+
 
 function Shares(props) {
   const { currentUser } = useContext(AuthContext);
+
+  // Tags start
+  const [open, setOpen] = React.useState(false);
+  const [selectedTags, setSelectedTags] = React.useState(null);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (value) => {
+    setOpen(false);
+    setSelectedTags(value);
+  };
+
+  // Tags end
+
+  // const [selectedTags, setSelectedTags] = useState("");
+
   const { register, handleSubmit, setValue } = useForm();
   const [file, setFile] = useState(null);
 
@@ -20,7 +40,6 @@ function Shares(props) {
   const upload = async (formData) => {
     try {
       const res = await makeRequest.post("/upload", formData);
-      console.log("upload response", res);
       return res.data;
     } catch (err) {
       console.error(err);
@@ -35,7 +54,6 @@ function Shares(props) {
     let imgUrl = "";
     if (file) {
       imgUrl = await upload(formData);
-      console.log("imgUrl", imgUrl);
     }
 
     // Create the post
@@ -43,10 +61,10 @@ function Shares(props) {
       userId: currentUser._id,
       desc: data.desc,
       img: imgUrl,
+      tags: selectedTags,
     };
-    console.log("newPost", newPost);
     const response = await makeRequest.post("/post", newPost);
-    console.log("post success", response.data);
+    console.log("post", response.data);
     return response.data;
   };
 
@@ -58,6 +76,7 @@ function Shares(props) {
       // Reset the form and file input
       setValue("desc", "");
       setFile(null);
+      setSelectedTags("");
     },
   });
 
@@ -94,17 +113,35 @@ function Shares(props) {
           </div>
           <hr />
           <div className="attachment">
-            {/* Add study attachments */}
             <div className="left">
               {/* Add Course Tags or Skills Tags */}
               <div className="item">
-                {/* <input type="file" id="file" /> */}
-                {/* <label htmlFor="tag">
-                  <TagIcon />
-                  <span htmlFor="tag">Add Tags</span>
-                </label> */}
-                <Tag/>
+                {/* New Solution   start */}
+                <div className="tag">
+                  {selectedTags ? (
+                    <Typography variant="body2" component="div">
+                      #{selectedTags}
+                    </Typography>
+                  ) : null}
+
+                  <br />
+                  <input type="button" id="tags" onClick={handleClickOpen} />
+                  <label htmlFor="tags">
+                    <TagIcon />
+                    <span htmlFor="tags">Add Tags</span>
+                  </label>
+
+                  <SimpleDialog
+                    selectedTags={selectedTags}
+                    open={open}
+                    onClose={handleClose}
+                  />
+                </div>
+                {/* New Solution   end */}
+
+                {/* <Tag onSelectTag={(tag) => setSelectedTags(tag)} /> */}
               </div>
+              {/* Add study attachments */}
               <div className="item">
                 <input type="file" id="file" onChange={handleFileUpload} />
                 <label htmlFor="file">
