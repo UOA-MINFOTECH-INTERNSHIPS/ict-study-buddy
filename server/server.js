@@ -13,6 +13,7 @@ import userRoute from "./routes/users.js";
 import authRoute from "./routes/auth.js";
 import postRoute from "./routes/posts.js";
 import courseRoute from "./routes/course.js";
+import connectRoute from "./routes/connection.js";
 import cookieParser from "cookie-parser";
 //Setup Express
 const app = express();
@@ -68,6 +69,8 @@ app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);
 app.use("/api/course", courseRoute);
+app.use("/api/connection", connectRoute);
+
 
 // Start the server running. Once the server is running, the given function will be called, which will
 // log a simple message to the server console. Any console.log() statements in your node.js code
