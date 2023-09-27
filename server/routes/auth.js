@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
     });
     // Remove the password 
     const { password, ...others} = user._doc;
-    // Save the token into localStorage and send the data and token to client
+    // Save the token into cookie.
     res.cookie("accessToken", token, {httpOnly: true}).status(200).json(others);
   } catch (err) {
     res.status(500).json(err);

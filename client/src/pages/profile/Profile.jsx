@@ -87,7 +87,7 @@ function Profile(props) {
             </div>
           </div>
         </div>
-        <Posts username={username} />
+        <Posts userId={user._id} />
       </div>
       <RightBar />
     </div>

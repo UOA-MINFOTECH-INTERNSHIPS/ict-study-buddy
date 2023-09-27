@@ -35,7 +35,7 @@ app.use(
     crossOriginResourcePolicy: false,
   })
 );
-app.use(morgan("common"));
+// app.use(morgan("common"));
 app.use(cookieParser());
 
 //Set up sotrage destination and filename
