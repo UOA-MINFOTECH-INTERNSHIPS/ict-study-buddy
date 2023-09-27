@@ -64,6 +64,8 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+
+// GET POSTS BY USERID
 router.get("/", async (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
@@ -78,15 +80,23 @@ router.get("/", async (req, res) => {
 
     // If profileUserId is exist, get profile posts
     if (profileUserId !== "undefined") {
-      posts = await Post.find({ userId: profileUserId });
+      posts = await Post.find({ userInfos: profileUserId }).populate({
+        path: "userInfos",
+        select: "userName profilePic",
+      });
     }
     // Otherwise, to get community posts
     else {
       const currentUser = await User.findById(currentUserId);
       const followingIds = currentUser.followings;
       posts = await Post.find({
-        userId: { $in: [currentUser._id, ...followingIds] },
-      }).sort({ createdAt: -1 });
+        userInfos: { $in: [currentUser._id, ...followingIds] },
+      })
+        .populate({
+          path: "userInfos",
+          select: "userName profilePic",
+        })
+        .sort({ createdAt: -1 });
     }
 
     res.status(200).json(posts);

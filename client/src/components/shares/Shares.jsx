@@ -5,12 +5,11 @@ import "./share.scss";
 import { Link } from "react-router-dom";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { useForm } from "react-hook-form";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import SimpleDialog from "../tags/Tag";
 import TagIcon from "@mui/icons-material/Tag";
 import Typography from "@mui/material/Typography";
-
 
 function Shares(props) {
   const { currentUser } = useContext(AuthContext);
@@ -58,12 +57,14 @@ function Shares(props) {
 
     // Create the post
     const newPost = {
-      userId: currentUser._id,
+      userInfos: currentUser._id,
       desc: data.desc,
       img: imgUrl,
       tags: selectedTags,
     };
-    const response = await makeRequest.post("/post", newPost);
+    const response = await makeRequest.post("/post", newPost, {
+      withCredentials: true,
+    });
     console.log("post", response.data);
     return response.data;
   };

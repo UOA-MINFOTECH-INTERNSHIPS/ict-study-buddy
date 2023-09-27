@@ -7,8 +7,6 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Comments from "../comments/Comments";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { makeRequest } from "../../axios";
 import moment from "moment";
 
 function Post({ post }) {
@@ -17,19 +15,6 @@ function Post({ post }) {
   const [commentOpen, setCommentOpen] = useState(false);
 
   const [liked, setLiked] = useState(false);
-
-  const {
-    isLoading,
-    error,
-    data: user,
-  } = useQuery(["user", post.userId], () =>
-    makeRequest.get(`/users/${post.userId}`).then((res) => {
-      return res.data;
-    })
-  );
-  if (isLoading) return "Loading...";
-
-  if (error) return "An error has occurred: " + error.message;
 
   const handleClick = () => {
     setLiked(!liked);
@@ -41,17 +26,17 @@ function Post({ post }) {
         <div className="user">
           <div className="userInfo">
             <Link
-              to={`/profile/${user.userName}`}
+              to={`/profile/${post.userInfos._id}`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              <img src={user.profilePic} alt="avatar" />
+              <img src={post.userInfos.profilePic} alt="avatar" />
             </Link>
             <div className="details">
               <Link
-                to={`/profile/${user.userName}`}
+                to={`/profile/${post.userInfos.userName}`}
                 style={{ textDecoration: "none", color: "inherit" }}
               >
-                <span className="name">{user.userName}</span>
+                <span className="name">{post.userInfos.userName}</span>
               </Link>
               <span className="date">{moment(post.createdAt).fromNow()}</span>
             </div>
@@ -66,12 +51,6 @@ function Post({ post }) {
           <img src={`${PF}${post.img}`} alt="" />
           {/* Tags  */}
           <p className="tags">#{post.tags}</p>
-          {/* {post.tags &&
-            post.tags.map((tag, i) => (
-              <p className="tags" key={i}>
-                #{tag}
-              </p>
-            ))} */}
         </div>
         <div className="info">
           <div className="item" onClick={handleClick}>

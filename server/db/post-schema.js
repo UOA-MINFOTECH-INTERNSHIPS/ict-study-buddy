@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
-    userId: {
+    userInfos: {
       type: String,
       required: true,
+      ref: "User",
     },
     desc: {
       type: String,
