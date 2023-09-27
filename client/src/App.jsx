@@ -15,15 +15,16 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Messaging from './pages/MessagingPage/Messaging';
-import Settings from './pages/Settings/Settings';
+import Messaging from "./pages/MessagingPage/Messaging";
+import Settings from "./pages/Settings/Settings";
+
+// Create a client
+const queryClient = new QueryClient();
+
 function App() {
   const { currentUser } = useContext(AuthContext);
 
   const { darkMode } = useContext(DarkModeContext);
-
-  // Create a client
-  const queryClient = new QueryClient();
 
   const Layout = () => {
     return (

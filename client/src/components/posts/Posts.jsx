@@ -22,13 +22,14 @@ function Posts({ username }) {
     return res.data;
   });
 
-  if (isLoading) return "Loading...";
-
-  if (error) return "An error has occurred: " + error.message;
 
   return (
     <div className="posts">
-      {posts && posts.map((post) => <Post post={post} key={post._id} />)}
+      {
+        error ?  "An error has occurred: " + error.message
+        : isLoading ? "Loading...." 
+        : posts.map((post) => <Post post={post} key={post._id}/>)
+      }
     </div>
   );
 }
