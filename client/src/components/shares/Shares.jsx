@@ -62,9 +62,7 @@ function Shares(props) {
       img: imgUrl,
       tags: selectedTags,
     };
-    const response = await makeRequest.post("/post", newPost, {
-      withCredentials: true,
-    });
+    const response = await makeRequest.post("/post", newPost);
     console.log("post", response.data);
     return response.data;
   };

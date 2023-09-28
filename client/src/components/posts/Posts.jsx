@@ -13,9 +13,7 @@ function Posts({ userId }) {
     error,
     data: posts,
   } = useQuery(["Posts"], async () => {
-    const res = await makeRequest.get("/post?userId=" + userId, {
-      withCredentials: true,
-    });
+    const res = await makeRequest.get("/post?userId=" + userId);
     return res.data;
   });
 
