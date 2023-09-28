@@ -14,9 +14,8 @@ import Typography from "@mui/material/Typography";
 function Shares(props) {
   const { currentUser } = useContext(AuthContext);
 
-  // Tags start
-  const [open, setOpen] = React.useState(false);
-  const [selectedTags, setSelectedTags] = React.useState(null);
+  const [open, setOpen] = useState(false);
+  const [selectedTags, setSelectedTags] = useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -26,10 +25,6 @@ function Shares(props) {
     setOpen(false);
     setSelectedTags(value);
   };
-
-  // Tags end
-
-  // const [selectedTags, setSelectedTags] = useState("");
 
   const { register, handleSubmit, setValue } = useForm();
   const [file, setFile] = useState(null);
@@ -63,7 +58,6 @@ function Shares(props) {
       tags: selectedTags,
     };
     const response = await makeRequest.post("/post", newPost);
-    console.log("post", response.data);
     return response.data;
   };
 
@@ -115,7 +109,6 @@ function Shares(props) {
             <div className="left">
               {/* Add Course Tags or Skills Tags */}
               <div className="item">
-                {/* New Solution   start */}
                 <div className="tag">
                   {selectedTags ? (
                     <Typography variant="body2" component="div">
@@ -136,9 +129,6 @@ function Shares(props) {
                     onClose={handleClose}
                   />
                 </div>
-                {/* New Solution   end */}
-
-                {/* <Tag onSelectTag={(tag) => setSelectedTags(tag)} /> */}
               </div>
               {/* Add study attachments */}
               <div className="item">

@@ -1,13 +1,9 @@
 import "./posts.scss";
 import Post from "../post/Post";
-import { useContext } from "react";
-import { AuthContext } from "../../context/authContext";
 import { makeRequest } from "../../axios";
 import { useQuery } from "@tanstack/react-query";
 
 function Posts({ userId }) {
-  const { currentUser } = useContext(AuthContext);
-
   const {
     isLoading,
     error,
