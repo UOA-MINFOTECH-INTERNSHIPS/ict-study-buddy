@@ -103,26 +103,17 @@ function Profile() {
                 <div className="courses">
                   <div className="title">Courses</div>
                   <div className="items">
-                    <div className="item">COMPSC 732</div>
-                    <div className="item">COMPSC 751</div>
-                    <div className="item">COMPSC 762</div>
-                    <div className="item">COMPSC 752</div>
-                    <div className="item">COMPSC 704</div>
-                    <div className="item">COMPSC 704</div>
-                    <div className="item">COMPSC 704</div>
-                    <div className="item">COMPSC 704</div>
+                    {user.courses.map((course) => (
+                      <div className="item">{course}</div>
+                    ))}
                   </div>
                 </div>
                 <div className="skills">
                   <div className="title">Skills</div>
                   <div className="items">
-                    <div className="item">JavaScript</div>
-                    <div className="item">Python</div>
-                    <div className="item">TypeScript</div>
-                    <div className="item">MongoDB</div>
-                    <div className="item">JavaScript</div>
-                    <div className="item">JavaScript</div>
-                    <div className="item">JavaScript</div>
+                    {user.skills.map((skill) => (
+                      <div className="item">{skill}</div>
+                    ))}
                   </div>
                 </div>
               </div>
