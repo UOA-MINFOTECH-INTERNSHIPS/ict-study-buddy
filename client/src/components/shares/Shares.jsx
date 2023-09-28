@@ -86,7 +86,7 @@ function Shares(props) {
       <div className="container">
         {/* UserInfo */}
         <Link
-          to={`/profile/${currentUser.userName}`}
+          to={`/profile/${currentUser._id}`}
           style={{ textDecoration: "none", color: "inherit" }}
         >
           <div className="userInfo">
