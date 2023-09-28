@@ -79,21 +79,25 @@ function Profile() {
                       <span>Followers</span>
                     </div>
                   </div>
-                  <div className="connect">
-                    {followerLoading ? (
-                      "Loading..."
-                    ) : followers.includes(currentUser._id) ? (
-                      <button className="message" onClick={handleFollow}>
-                        Following
-                      </button>
-                    ) : (
-                      <button className="follow" onClick={handleFollow}>
-                        Follow
-                      </button>
-                    )}
+                  {userId === currentUser._id ? (
+                    <></>
+                  ) : (
+                    <div className="connect">
+                      {followerLoading ? (
+                        "Loading..."
+                      ) : followers.includes(currentUser._id) ? (
+                        <button className="message" onClick={handleFollow}>
+                          Following
+                        </button>
+                      ) : (
+                        <button className="follow" onClick={handleFollow}>
+                          Follow
+                        </button>
+                      )}
 
-                    <button className="message">Message</button>
-                  </div>
+                      <button className="message">Message</button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
