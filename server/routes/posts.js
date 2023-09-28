@@ -64,7 +64,6 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-
 // GET POSTS BY USERID
 router.get("/", async (req, res) => {
   const token = req.cookies.accessToken;
@@ -105,8 +104,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-export default router;
-
 async function verifyToken(token) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, "secretkey", (err, userInfo) => {
@@ -118,3 +115,29 @@ async function verifyToken(token) {
     });
   });
 }
+
+// Like or Dislike a Post
+router.put("/:id/like", async (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not logged in!");
+
+  const userInfo = await verifyToken(token);
+  const currentUserId = userInfo.userId;
+
+  const post = await Post.findById(req.params.id);
+
+  try {
+    if (!post.likes.includes(currentUserId)) {
+      await post.updateOne({ $push: { likes: currentUserId } });
+      res.status(200).json("The post has been liked");
+    }
+    else {
+      await post.updateOne({ $pull: { likes: currentUserId } });
+      res.status(200).json("The post has been disliked");
+    }
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
+export default router;
