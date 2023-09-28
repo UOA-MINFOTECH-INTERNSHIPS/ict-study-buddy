@@ -8,16 +8,27 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import Comments from "../comments/Comments";
 import { useState } from "react";
 import moment from "moment";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
+import { makeRequest } from "../../axios";
 
 function Post({ post }) {
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+  const { currentUser } = useContext(AuthContext);
+
+  const [liked, setLiked] = useState(post.likes.includes(currentUser._id));
+  const [likesCount, setLikesCount] = useState(post.likes.length);
 
   const [commentOpen, setCommentOpen] = useState(false);
 
-  const [liked, setLiked] = useState(false);
-
-  const handleClick = () => {
-    setLiked(!liked);
+  const handleClick = async () => {
+    try {
+      await makeRequest.put(`/post/${post._id}/like`);
+      setLiked(!liked);
+      setLikesCount(liked ? likesCount - 1 : likesCount + 1);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
@@ -53,13 +64,13 @@ function Post({ post }) {
           <p className="tags">#{post.tags}</p>
         </div>
         <div className="info">
-          <div className="item" onClick={handleClick}>
+          <div className="item">
             {liked ? (
-              <FavoriteIcon style={{ color: "red" }} />
+              <FavoriteIcon style={{ color: "red" }} onClick={handleClick} />
             ) : (
-              <FavoriteBorderIcon />
+              <FavoriteBorderIcon onClick={handleClick} />
             )}
-            12 Likes
+            {likesCount} Likes
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
