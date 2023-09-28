@@ -8,7 +8,7 @@ function Posts({ userId }) {
     isLoading,
     error,
     data: posts,
-  } = useQuery(["Posts"], async () => {
+  } = useQuery(["Posts", userId], async () => {
     const res = await makeRequest.get("/post?userId=" + userId);
     return res.data;
   });
