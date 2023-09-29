@@ -49,4 +49,22 @@ router.post("/:id", async (req, res) => {
   }
 });
 
+//Get comments
+router.get("/:id", async (req, res) => {
+    const token = req.cookies.accessToken;
+    if (!token) return res.status(401).json("Not logged in!");
+    jwt.verify(token, "secretkey", (err) => {
+      if (err) return res.status(403).json("Token is not valid!");
+    });
+  
+    const postId = req.params.id; //Get the post id from the request params
+  
+    try {
+      const comments = await Comment.find({ postId: postId }); // Find the comments ralated to the post
+      res.status(200).json(comments);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  });
+
 export default router;
