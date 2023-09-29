@@ -6,7 +6,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import moment from "moment";
 
-function Comments({ postId }) {
+function Comments({ postId, onCommentSubmitted }) {
   const [desc, setDesc] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -29,6 +29,7 @@ function Comments({ postId }) {
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["comments"]);
+        onCommentSubmitted();
       },
     }
   );

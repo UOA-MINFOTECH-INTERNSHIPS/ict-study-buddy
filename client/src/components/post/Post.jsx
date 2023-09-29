@@ -18,6 +18,7 @@ function Post({ post }) {
 
   const [liked, setLiked] = useState(post.likes.includes(currentUser._id));
   const [likesCount, setLikesCount] = useState(post.likes.length);
+  const [commentsCount, setCommentsCount] = useState(post.comments.length);
 
   const [commentOpen, setCommentOpen] = useState(false);
 
@@ -74,14 +75,21 @@ function Post({ post }) {
           </div>
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <TextsmsOutlinedIcon />
-            12 Comments
+            {commentsCount} Comments
           </div>
           <div className="item">
             <ShareOutlinedIcon />
             Share
           </div>
         </div>
-        {commentOpen && <Comments postId={post._id}/>}
+        {commentOpen && (
+          <Comments
+            postId={post._id}
+            onCommentSubmitted={() => {
+              setCommentsCount(commentsCount + 1);
+            }}
+          />
+        )}
       </div>
     </div>
   );

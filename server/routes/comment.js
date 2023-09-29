@@ -1,7 +1,7 @@
 import express from "express";
 import { User } from "../db/user-schema.js";
-import { Post } from "../db/post-schema.js";
 import { Comment } from "../db/comment-schema.js";
+import { Post } from "../db/post-schema.js";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
@@ -26,8 +26,11 @@ router.post("/", async (req, res) => {
   const userInfo = await verifyToken(token); // Get user information from the token
   const currentUserId = userInfo.userId; // Get the current user's ID from the token
 
+  
+  
   try {
     const currentUser = await User.findById(currentUserId); //Find the current user
+    const post = await Post.findById(req.body.postId);
 
     // Create a new comment
     const newComment = new Comment({
@@ -40,8 +43,8 @@ router.post("/", async (req, res) => {
     //Save the new comment
     const comment = await newComment.save();
     // Update the post to include the new comment
-    // await post.updateOne({ $push: { comments: comment } });
-    res.status(200).json(comment);
+    await post.updateOne({ $push: { comments: comment } });
+    res.status(200).json(post);
   } catch (error) {
     res.status(500).json(error);
   }
