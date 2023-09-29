@@ -19,24 +19,22 @@ async function verifyToken(token) {
 }
 
 //Add a comment
-router.post("/:id", async (req, res) => {
+router.post("/", async (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
 
   const userInfo = await verifyToken(token); // Get user information from the token
   const currentUserId = userInfo.userId; // Get the current user's ID from the token
-  const desc = req.body.desc; // Get the comment description from the request body
 
   try {
     const currentUser = await User.findById(currentUserId); //Find the current user
 
-    const post = await Post.findById(req.params.id); //Find the post by postId
     // Create a new comment
     const newComment = new Comment({
-      desc: desc,
+      desc: req.body.desc,
       userId: currentUserId,
       userName: currentUser.userName,
-      postId: post._id,
+      postId: req.body.postId,
       profilePic: currentUser.profilePic,
     });
     //Save the new comment
