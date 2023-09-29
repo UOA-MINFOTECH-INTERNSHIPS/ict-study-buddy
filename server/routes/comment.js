@@ -1,6 +1,7 @@
 import express from "express";
 import { User } from "../db/user-schema.js";
 import { Post } from "../db/post-schema.js";
+import { Comment } from "../db/comment-schema.js";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
@@ -22,24 +23,27 @@ router.post("/:id", async (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
 
-  const userInfo = await verifyToken(token); //Get userInfo
-  const currentUserId = userInfo.userId; //Get currentuser id
-
-  const desc = req.body.desc; //Get comment description
+  const userInfo = await verifyToken(token); // Get user information from the token
+  const currentUserId = userInfo.userId; // Get the current user's ID from the token
+  const desc = req.body.desc; // Get the comment description from the request body
 
   try {
     const currentUser = await User.findById(currentUserId); //Find the current user
 
-    const newComment = {
+    const post = await Post.findById(req.params.id); //Find the post by postId
+    // Create a new comment
+    const newComment = new Comment({
       desc: desc,
       userId: currentUserId,
       userName: currentUser.userName,
-    }; //Create a newComment
-
-    const post = await Post.findById(req.params.id); //Find the post
-
-    await post.updateOne({ $push: { comments: newComment } }); //Update the post comment
-    res.status(200).json(newComment);
+      postId: post._id,
+      profilePic: currentUser.profilePic,
+    });
+    //Save the new comment
+    const comment = await newComment.save();
+    // Update the post to include the new comment
+    // await post.updateOne({ $push: { comments: comment } });
+    res.status(200).json(comment);
   } catch (error) {
     res.status(500).json(error);
   }
