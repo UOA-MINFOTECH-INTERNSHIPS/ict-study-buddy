@@ -11,6 +11,8 @@ import moment from "moment";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { makeRequest } from "../../axios";
+import MorePopper from "../morePopper/morePopper";
+import Button from "@mui/material/Button";
 
 function Post({ post }) {
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
@@ -18,9 +20,20 @@ function Post({ post }) {
 
   const [liked, setLiked] = useState(post.likes.includes(currentUser._id));
   const [likesCount, setLikesCount] = useState(post.likes.length);
-  const [commentsCount, setCommentsCount] = useState(post.comments.length);
 
   const [commentOpen, setCommentOpen] = useState(false);
+  const [commentsCount, setCommentsCount] = useState(post.comments.length);
+
+  // Open the more button
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [placement, setPlacement] = useState();
+
+  const handleMoreOpen = (newPlacement) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setMoreOpen((prev) => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
+  };
 
   const handleClick = async () => {
     try {
@@ -54,15 +67,19 @@ function Post({ post }) {
             </div>
           </div>
 
-          <MoreHorizIcon />
+          <MorePopper
+            moreOpen={moreOpen}
+            anchorEl={anchorEl}
+            placement={placement}
+          />
+          <Button onClick={handleMoreOpen("bottom-start")} className="more">
+            <MoreHorizIcon />
+          </Button>
         </div>
         <div className="content">
-          {/* Post content */}
           <p>{post.desc}</p>
-          {/* Post Images */}
-          <img src={`${PF}${post.img}`} alt="" />
-          {/* Tags  */}
-          <p className="tags">#{post.tags}</p>
+          {post.img ? <img src={`${PF}${post.img}`} alt="" /> : null}
+          {post.tags ? <p className="tags">#{post.tags}</p> : null}
         </div>
         <div className="info">
           <div className="item">

@@ -21,16 +21,13 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 //Middleware
-// Setup JSON parsing for the request body
-app.use(express.json());
-
+app.use(express.json()); // Setup JSON parsing for the request body
 app.use(
   cors({
     origin: ["https://study-buddy-steel.vercel.app", "http://localhost:5173"],
     credentials: true,
   })
 );
-
 app.use(
   helmt({
     crossOriginResourcePolicy: false,

@@ -26,8 +26,6 @@ router.post("/", async (req, res) => {
   const userInfo = await verifyToken(token); // Get user information from the token
   const currentUserId = userInfo.userId; // Get the current user's ID from the token
 
-  
-  
   try {
     const currentUser = await User.findById(currentUserId); //Find the current user
     const post = await Post.findById(req.body.postId);
