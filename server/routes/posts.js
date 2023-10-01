@@ -7,11 +7,19 @@ const router = express.Router();
 
 // CREATE A POST
 router.post("/", async (req, res) => {
-  const newPost = new Post(req.body);
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
   jwt.verify(token, "secretkey", (err) => {
     if (err) return res.status(403).json("Token is not valid!");
+  });
+
+  const userInfo = await verifyToken(token);
+
+  const newPost = new Post({
+    userInfos: userInfo.userId,
+    desc: req.body.desc,
+    img: req.body.img,
+    tags: req.body.tags,
   });
 
   try {
