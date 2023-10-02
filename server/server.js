@@ -15,7 +15,10 @@ import postRoute from "./routes/posts.js";
 import courseRoute from "./routes/course.js";
 import connectRoute from "./routes/connection.js";
 import commentROute from "./routes/comment.js";
+import conversationRoute from "./routes/conversations.js";
+import messageRoute from "./routes/messages.js";
 import cookieParser from "cookie-parser";
+
 //Setup Express
 const app = express();
 const port = process.env.PORT || 3000;
@@ -33,7 +36,7 @@ app.use(
     crossOriginResourcePolicy: false,
   })
 );
-// app.use(morgan("common"));
+app.use(morgan("common"));
 app.use(cookieParser());
 
 //Set up sotrage destination and filename
@@ -55,10 +58,14 @@ const upload = multer({ storage: storage });
 
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
-    const file = req.file;
-    res.status(200).json(file.filename);
+    const fileData = {
+      name: req.file.originalname,
+      url: "http://localhost:3000/images/" + req.file.filename, 
+    };
+    res.status(200).json(fileData);
   } catch (error) {
     console.log("error", error);
+    res.status(500).json({ error: "File upload failed" });
   }
 });
 
@@ -69,7 +76,8 @@ app.use("/api/post", postRoute);
 app.use("/api/course", courseRoute);
 app.use("/api/connection", connectRoute);
 app.use("/api/comment", commentROute);
-
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
 
 // Start the server running. Once the server is running, the given function will be called, which will
 // log a simple message to the server console. Any console.log() statements in your node.js code
