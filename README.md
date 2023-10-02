@@ -53,7 +53,7 @@ cd socket
 yarn install 
 
 # launch
-yarn dev
+yarn start
 ```
 ***
 
