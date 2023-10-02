@@ -1,6 +1,6 @@
 // settings-schema.js
 import mongoose from 'mongoose';
-import { connectDB } from './connectDB.cjs';
+// import { connectDB } from './connectDB.cjs';
 
 
 const settingsSchema = new mongoose.Schema({
@@ -91,4 +91,4 @@ const Settings = mongoose.model('Settings', settingsSchema);
 export {Settings}
 
 
-connectDB();
+// connectDB();

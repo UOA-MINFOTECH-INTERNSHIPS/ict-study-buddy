@@ -26,16 +26,12 @@ function NavBar(props) {
           <span>Study Buddy</span>
         </Link>
         <Link to="/" style={{ textDecoration: "none" }}>
-          <HomeOutlinedIcon className="homebutton" />
+          <HomeOutlinedIcon className="items" />
         </Link>
-
         {darkMode ? (
-          <DarkModeOutlinedIcon
-            onClick={toggle}
-            style={{ cursor: "pointer" }}
-          />
+          <DarkModeOutlinedIcon onClick={toggle} />
         ) : (
-          <WbSunnyOutlinedIcon onClick={toggle} style={{ cursor: "pointer" }} />
+          <WbSunnyOutlinedIcon onClick={toggle} />
         )}
 
         <GridViewOutlinedIcon />
@@ -45,9 +41,11 @@ function NavBar(props) {
         </div>
       </div>
       <div className="right">
-        <PersonOutlinedIcon />
-        <Link to="/messenger" style={{ textDecoration: "none" }} >
-          <MessageOutlinedIcon  className="messageBtn"/>
+        <Link to={"/settings"}>
+          <PersonOutlinedIcon className="items" />
+        </Link>
+        <Link to="/messenger">
+          <MessageOutlinedIcon className="items" />
         </Link>
         <NotificationsOutlinedIcon />
         <div className="user">

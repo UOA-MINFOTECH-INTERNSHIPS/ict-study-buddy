@@ -50,7 +50,7 @@ router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     try {
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("Account has been deleted");
+      res.status(204).json("Account has been deleted");
     } catch (error) {
       return res.status(500).json(error);
     }

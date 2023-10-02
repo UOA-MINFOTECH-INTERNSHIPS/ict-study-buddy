@@ -8,7 +8,7 @@ import { Group } from "../db/groups-schema.js";
 
 router.get('/:userId', async (req, res) => {
   const { userId } = req.params;
-  const user = await User.findById(userId);
+  const user = await User.findById(req.params.userId);
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
   }
@@ -25,7 +25,7 @@ router.get('/:userId', async (req, res) => {
     });
     try {
       const settings = await newSettings.save();
-      return res.status(201).json({"setting":settings,"groupList":groupList});
+      return res.status(200).json({"setting":settings,"groupList":groupList});
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -35,7 +35,7 @@ router.get('/:userId', async (req, res) => {
     const now_user = await User.findById(setting.blockedUsers[i]);
     bloced.push(now_user);
   }
-  return res.status(201).json({"setting":setting,"groupList":groupList,"blockedUsersList":bloced});
+  return res.status(200).json({"setting":setting,"groupList":groupList,"blockedUsersList":bloced});
 })
 
 // Update user settings

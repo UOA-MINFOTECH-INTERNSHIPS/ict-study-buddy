@@ -1,8 +1,9 @@
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
+import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile";
 import Messenger from './pages/messenger/Messenger';
-import Home from "./pages/home/Home";
+import Settings from "./pages/Settings/Settings";
 import NavBar from "./components/navbar/NavBar";
 
 import * as React from "react";
@@ -17,7 +18,6 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-// import Settings from "./pages/Settings/Settings";
 
 const queryClient = new QueryClient();
 
@@ -65,10 +65,10 @@ function App() {
           path: "/messenger",
           element: <Messenger />,
         },
-        // {
-        //   path: "/settings",
-        //   element: <Settings />,
-        // },
+        {
+          path: "/settings",
+          element: <Settings />,
+        },
       ],
     },
     {

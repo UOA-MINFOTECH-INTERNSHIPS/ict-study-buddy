@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
     const comment = await newComment.save();
     // Update the post to include the new comment
     await post.updateOne({ $push: { comments: comment } });
-    res.status(200).json(post);
+    res.status(201).json(post);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -87,7 +87,7 @@ router.delete("/:id", async (req, res) => {
     if (comment.userId === currentUserId) {
       //Find and delete the comment
       await Comment.findByIdAndDelete(commentId);
-      res.status(200).json("The comment has been deleted");
+      res.status(204).json("The comment has been deleted");
     } else {
       return res.status(403).json("You can only delete your own comment.");
     }

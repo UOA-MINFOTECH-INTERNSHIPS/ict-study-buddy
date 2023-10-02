@@ -17,6 +17,8 @@ import connectRoute from "./routes/connection.js";
 import commentROute from "./routes/comment.js";
 import conversationRoute from "./routes/conversations.js";
 import messageRoute from "./routes/messages.js";
+import settingRoute from "./routes/sets.js";
+import groupRoute from "./routes/groups.js";
 import cookieParser from "cookie-parser";
 
 //Setup Express
@@ -78,6 +80,8 @@ app.use("/api/connection", connectRoute);
 app.use("/api/comment", commentROute);
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
+app.use("/api/set", settingRoute);
+app.use("/api/group", groupRoute);
 
 // Start the server running. Once the server is running, the given function will be called, which will
 // log a simple message to the server console. Any console.log() statements in your node.js code

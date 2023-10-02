@@ -25,9 +25,11 @@
         font-size: 20px;
         color: themed("logo");
       }
-      .homebutton {
+      .items {
         color: themed("textColor");
+        cursor: pointer;
       }
+
       // SearchBar style
       .search {
         display: flex;
@@ -36,6 +38,7 @@
         border: 1px solid themed("border");
         border-radius: 5px;
         padding: 5px;
+
         input {
           border: none;
           width: 500px;
@@ -57,7 +60,7 @@
         display: none;
       }
 
-      .messageBtn {
+      .items {
         color: themed("textColor");
         cursor: pointer;
       }
@@ -74,9 +77,6 @@
           border-radius: 50%;
           object-fit: cover;
         }
-        // span {
-
-        // }
       }
     }
   }

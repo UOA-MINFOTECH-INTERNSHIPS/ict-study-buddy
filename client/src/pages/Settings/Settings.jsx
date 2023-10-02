@@ -60,7 +60,7 @@ function Settings() {
             "receiveNotifications":receiveNotifications,
             "darkMode":darkMode
         };
-        axios.put(`http://localhost:3001/api/set/${setting._id}`, data)
+        axios.put(`http://localhost:3000/api/set/${setting._id}`, data)
         .then(response => {
             localStorage.setItem("darkMode", darkMode);
             openNotificationWithIcon("success",'tips ','Save Successfully(The darkMode takes effect when the page is refreshed)!');
@@ -85,7 +85,7 @@ function Settings() {
     const getOnload=async()=>{
         var user=JSON.parse(localStorage.getItem("user"));
         const userId = user._id;
-        axios.get(`http://localhost:3001/api/set/${userId}`)
+        axios.get(`http://localhost:3000/api/set/${userId}`)
             .then(response => {
                 console.log(response.data);
                 setSetting(response.data.setting);
@@ -174,7 +174,7 @@ function Settings() {
                 "roles":now_roles,
                 "major":major
             };
-            axios.put(`http://localhost:3001/api/set/${setting._id}`, data)
+            axios.put(`http://localhost:3000/api/set/${setting._id}`, data)
                 .then(response => {
                     openNotificationWithIcon('success','tips','Save Successfully!');
                     setIsEditable(true);
@@ -208,7 +208,7 @@ function Settings() {
             var now_member_list=now_group.members;
             now_member_list.push(uid);
         }
-        axios.put(`http://localhost:3001/api/group/${now_group._id}`, {"members":now_member_list})
+        axios.put(`http://localhost:3000/api/group/${now_group._id}`, {"members":now_member_list})
         .then(response => {
             openNotificationWithIcon('success','tips','group option success!');
             getOnload();
@@ -227,7 +227,7 @@ function Settings() {
                 now_block_list.push(block);
             }
         });
-        axios.put(`http://localhost:3001/api/set/${setting._id}`, {blockedUsers:now_block_list})
+        axios.put(`http://localhost:3000/api/set/${setting._id}`, {blockedUsers:now_block_list})
         .then(response => {
             openNotificationWithIcon('success','tips','Cancel the shielding Successfully!');
             getOnload();
