@@ -86,7 +86,7 @@ function Profile() {
                       {followerLoading ? (
                         "Loading..."
                       ) : followers.includes(currentUser._id) ? (
-                        <button className="message" onClick={handleFollow}>
+                        <button className="messageBtn" onClick={handleFollow}>
                           Following
                         </button>
                       ) : (
@@ -95,7 +95,7 @@ function Profile() {
                         </button>
                       )}
 
-                      <button className="message">Message</button>
+                      <button className="messageBtn">Message</button>
                     </div>
                   )}
                 </div>

@@ -46,7 +46,9 @@ function NavBar(props) {
       </div>
       <div className="right">
         <PersonOutlinedIcon />
-        <MessageOutlinedIcon />
+        <Link to="/messenger" style={{ textDecoration: "none" }} >
+          <MessageOutlinedIcon  className="messageBtn"/>
+        </Link>
         <NotificationsOutlinedIcon />
         <div className="user">
           <img src={currentUser.profilePic} />
