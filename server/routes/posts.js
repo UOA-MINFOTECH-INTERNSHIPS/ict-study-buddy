@@ -18,7 +18,10 @@ router.post("/", async (req, res) => {
   const newPost = new Post({
     userInfos: userInfo.userId,
     desc: req.body.desc,
-    img: req.body.img,
+    file: {
+      name: req.body.file.name,
+      url: req.body.file.url,
+    },
     tags: req.body.tags,
   });
 

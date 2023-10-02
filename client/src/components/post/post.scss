@@ -46,7 +46,7 @@
           cursor: pointer;
           color: themed("textColor");
         }
-        .dialog{
+        .dialog {
           display: inline;
         }
       }
@@ -59,6 +59,19 @@
           max-height: 500px;
           object-fit: cover;
           margin-top: 20px;
+        }
+
+        .postFile {
+          text-decoration: none;
+          color: themed(textColor);
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 10px;
+
+          .downloadBtn {
+            color: #8095ff;
+          }
         }
         .tags {
           color: #8095ff;

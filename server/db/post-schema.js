@@ -11,8 +11,13 @@ const postSchema = new mongoose.Schema(
       type: String,
       max: 500,
     },
-    img: {
-      type: String,
+    file: {
+      name: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
     },
     tags: {
       type: String,

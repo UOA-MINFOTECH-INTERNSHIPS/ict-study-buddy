@@ -5,6 +5,7 @@ import FavoriteIcon from "@mui/icons-material/FavoriteOutlined";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import DownloadIcon from "@mui/icons-material/Download";
 import Comments from "../comments/Comments";
 import { useState } from "react";
 import moment from "moment";
@@ -78,7 +79,20 @@ function Post({ post }) {
         </div>
         <div className="content">
           <p>{post.desc}</p>
-          {post.img ? <img src={`${PF}${post.img}`} alt="" /> : null}
+          {post.file ? (
+            <div>
+              <a
+                href={`${post.file?.url}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="postFile"
+              >
+                <p>{post.file.name}</p>
+                <DownloadIcon className="downloadBtn" />
+              </a>
+            </div>
+          ) : null}
+
           {post.tags ? <p className="tags">#{post.tags}</p> : null}
         </div>
         <div className="info">

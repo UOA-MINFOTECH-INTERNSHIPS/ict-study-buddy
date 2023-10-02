@@ -39,17 +39,18 @@ function Shares() {
   const createPost = async () => {
     const formData = new FormData();
     formData.append("file", file);
-    let fileUrl = "";
+    let fileData = "";
     if (file) {
-      fileUrl = await upload(formData);
+      fileData = await upload(formData);
     }
     // Create a new post with description, tags, and file.
     const newPost = {
       desc: desc,
       tags: selectedTags,
-      img: fileUrl,
+      file: fileData,
     }; //Create a newPost based the content, tags, file
     const response = await makeRequest.post("/post", newPost);
+    console.log('response', response.data);
     return response.data;
   };
 
