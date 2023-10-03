@@ -12,7 +12,7 @@ import moment from "moment";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { makeRequest } from "../../axios";
-import MorePopper from "../morePopper/morePopper";
+import MorePopper from "../morePopper/MorePopper";
 import Button from "@mui/material/Button";
 
 function Post({ post }) {
@@ -72,10 +72,17 @@ function Post({ post }) {
             moreOpen={moreOpen}
             anchorEl={anchorEl}
             placement={placement}
+            postId={post._id}
           />
-          <Button onClick={handleMoreOpen("bottom-start")} className="more">
-            <MoreHorizIcon />
-          </Button>
+          {post.userInfos._id !== currentUser._id ? null : (
+            <Button
+              onClick={handleMoreOpen("bottom-start")}
+              autoFocus
+              className="more"
+            >
+              <MoreHorizIcon />
+            </Button>
+          )}
         </div>
         <div className="content">
           <p>{post.desc}</p>
