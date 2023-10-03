@@ -6,16 +6,17 @@ import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import DownloadIcon from "@mui/icons-material/Download";
+import Button from "@mui/material/Button";
+import Popover from "@mui/material/Popover";
+import MorePopover from "../morePopover/MorePopover";
 import Comments from "../comments/Comments";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import moment from "moment";
-import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
 import { makeRequest } from "../../axios";
-import MorePopper from "../morePopper/MorePopper";
-import Button from "@mui/material/Button";
 
 function Post({ post }) {
+  console.log("post", post);
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
   const { currentUser } = useContext(AuthContext);
 
@@ -25,18 +26,20 @@ function Post({ post }) {
   const [commentOpen, setCommentOpen] = useState(false);
   const [commentsCount, setCommentsCount] = useState(post.comments.length);
 
-  // Open the more button
+  // Open the popper
   const [anchorEl, setAnchorEl] = useState(null);
-  const [moreOpen, setMoreOpen] = useState(false);
-  const [placement, setPlacement] = useState();
-
-  const handleMoreOpen = (newPlacement) => (event) => {
+  const handleMoreOpen = (event) => {
     setAnchorEl(event.currentTarget);
-    setMoreOpen((prev) => placement !== newPlacement || !prev);
-    setPlacement(newPlacement);
   };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
-  const handleClick = async () => {
+
+
+  const handleLike = async () => {
     try {
       await makeRequest.put(`/post/${post._id}/like`);
       setLiked(!liked);
@@ -68,21 +71,27 @@ function Post({ post }) {
             </div>
           </div>
 
-          <MorePopper
-            moreOpen={moreOpen}
-            anchorEl={anchorEl}
-            placement={placement}
-            postId={post._id}
-          />
-          {post.userInfos._id !== currentUser._id ? null : (
-            <Button
-              onClick={handleMoreOpen("bottom-start")}
-              autoFocus
-              className="more"
-            >
+          {post.userInfos._id !== currentUser._id ? (
+            <Button>
+              <MoreHorizIcon style={{ color: "darkgrey" }} />
+            </Button>
+          ) : (
+            <Button onClick={handleMoreOpen} autoFocus className="more">
               <MoreHorizIcon />
             </Button>
           )}
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <MorePopover postId={post._id} />
+          </Popover>
         </div>
         <div className="content">
           <p>{post.desc}</p>
@@ -105,9 +114,9 @@ function Post({ post }) {
         <div className="info">
           <div className="item">
             {liked ? (
-              <FavoriteIcon style={{ color: "red" }} onClick={handleClick} />
+              <FavoriteIcon style={{ color: "red" }} onClick={handleLike} />
             ) : (
-              <FavoriteBorderIcon onClick={handleClick} />
+              <FavoriteBorderIcon onClick={handleLike} />
             )}
             {likesCount} Likes
           </div>
