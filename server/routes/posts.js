@@ -40,10 +40,13 @@ router.delete("/:id", async (req, res) => {
   jwt.verify(token, "secretkey", (err) => {
     if (err) return res.status(403).json("Token is not valid!");
   });
+  const userInfo = await verifyToken(token);
+  const currentUserId = userInfo.userId;
+  const postId = req.params.id;
 
   try {
-    const post = await Post.findById(req.params.id);
-    if (post.userId === req.body.userId) {
+    const post = await Post.findById(postId);
+    if (post.userInfos === currentUserId) {
       await post.deleteOne();
       res.status(204).json("Post has been deleted.");
     } else {
