@@ -1,5 +1,4 @@
 import "./navbar.scss";
-import * as React from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
@@ -9,15 +8,33 @@ import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
-import photo from "../../assets/register-background-pic.jpg";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../../context/authContext";
 import { DarkModeContext } from "../../context/darkModeContext";
+import { SearchContext } from "../../context/searchContext";
 
-function NavBar(props) {
+function NavBar() {
   const { toggle, darkMode } = useContext(DarkModeContext);
 
   const { currentUser } = useContext(AuthContext);
+
+  const { search } = useContext(SearchContext);
+
+  const [query, setQuery] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSearch = async () => {
+    try {
+      await search(query);
+      navigate(`/search/${query}`);
+      setQuery('');
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <div className="navbar">
@@ -37,7 +54,13 @@ function NavBar(props) {
         <GridViewOutlinedIcon />
         <div className="search">
           <SearchOutlinedIcon />
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
         </div>
       </div>
       <div className="right">
