@@ -8,28 +8,30 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
+import EditPost from "../editPost/EditPost";
+import { Popover, Typography } from "@mui/material";
 
-function MorePopover({postId}) {
-    console.log('Popover postId', postId);
+function MorePopover({ postId, post }) {
+  const { currentUser } = useContext(AuthContext); //Get currentUser's infos.
+
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [editDialogOpne, setEditDialogOpen] = useState(false);
 
   const handleDeleteDialogOpen = () => {
-    setDeleteDialogOpen(true);
+    setDeleteDialogOpen(!deleteDialogOpen);
   };
 
-  const handleDeleteDialogClose = () => {
-    setDeleteDialogOpen(false);
+  const handleEditDialogOpen = () => {
+    setEditDialogOpen(!editDialogOpne);
   };
 
   const handleDeletePost = async () => {
     try {
-        console.log('start Delete');
       const res = await makeRequest.delete(`/post/${postId}`);
-      console.log('end Delete');
-
       return res.data;
     } catch (error) {
       console.error(err);
@@ -54,7 +56,12 @@ function MorePopover({postId}) {
   return (
     <div className="popover">
       <div className="container">
-        <Button startIcon={<EditIcon />} className="item">
+        {/* <EditPost /> */}
+        <Button
+          startIcon={<EditIcon />}
+          className="item"
+          onClick={handleEditDialogOpen}
+        >
           Edit
         </Button>
         <Button
@@ -66,7 +73,7 @@ function MorePopover({postId}) {
         </Button>
         <Dialog
           open={deleteDialogOpen}
-          onClose={handleDeleteDialogClose}
+          onClose={handleDeleteDialogOpen}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -79,13 +86,16 @@ function MorePopover({postId}) {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleDeleteDialogClose}>Cancel</Button>
+            <Button onClick={handleDeleteDialogOpen}>Cancel</Button>
             <Button onClick={handleDeleteDialog} autoFocus>
               Delete
             </Button>
           </DialogActions>
         </Dialog>
       </div>
+      {editDialogOpne && (
+        <EditPost handleEditDialogOpen={handleEditDialogOpen} post={post} />
+      )}
     </div>
   );
 }

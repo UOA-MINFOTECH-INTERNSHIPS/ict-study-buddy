@@ -16,7 +16,6 @@ import { AuthContext } from "../../context/authContext";
 import { makeRequest } from "../../axios";
 
 function Post({ post }) {
-  console.log("post", post);
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
   const { currentUser } = useContext(AuthContext);
 
@@ -36,8 +35,6 @@ function Post({ post }) {
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
-
-
 
   const handleLike = async () => {
     try {
@@ -90,7 +87,7 @@ function Post({ post }) {
               horizontal: "left",
             }}
           >
-            <MorePopover postId={post._id} />
+            <MorePopover postId={post._id} post={post}/>
           </Popover>
         </div>
         <div className="content">
