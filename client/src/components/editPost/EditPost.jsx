@@ -1,21 +1,18 @@
-import "./share.scss";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../context/authContext";
-import { Link } from "react-router-dom";
+import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+import TagIcon from "@mui/icons-material/Tag";
+import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
-import TagIcon from "@mui/icons-material/Tag";
-import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+
 import SimpleDialog from "../tags/Tag";
 
-function Shares() {
-  const { currentUser } = useContext(AuthContext); //Get currentUser's infos.
+import { useState } from "react";
 
-  const [desc, setDesc] = useState(""); // Initialize the content to an empty string.
-  const [file, setFile] = useState(null); // Initialize the uploaded file to null.
+function EditPost({ handleEditDialogOpen, post }) {
+  const [updatedDesc, setUpdatedDesc] = useState({ desc: post.desc });
+  const [updatedFile, setUpdatedFile] = useState({ file: post.file }); // Initialize the uploaded file to null.
   const [open, setOpen] = useState(false); // Set the Add Tags feature status to closed by default.
-  const [selectedTags, setSelectedTags] = useState(null); // Initialize selectedTags to null.
+  const [selectedTags, setSelectedTags] = useState(post.tags); // Initialize selectedTags to null.
 
   // Function to open the tags dialog.
   const handleClickOpen = () => {
@@ -25,6 +22,10 @@ function Shares() {
   const handleClose = (value) => {
     setOpen(false);
     setSelectedTags(value);
+  };
+
+  const handleChange = (e) => {
+    setUpdatedDesc(e.target.value);
   };
 
   // Function to upload a file using FormData.
@@ -39,18 +40,18 @@ function Shares() {
   // Function to create a new post.
   const createPost = async () => {
     const formData = new FormData();
-    formData.append("file", file);
+    formData.append("file", updatedFile);
     let fileData = "";
-    if (file) {
+    if (updatedFile) {
       fileData = await upload(formData);
     }
     // Create a new post with description, tags, and file.
     const newPost = {
-      desc: desc,
+      desc: updatedDesc,
       tags: selectedTags,
       file: fileData,
     }; //Create a newPost based the content, tags, file
-    const response = await makeRequest.post("/post", newPost);
+    const response = await makeRequest.put(`/post/${post._id}`, newPost);
     return response.data;
   };
 
@@ -60,9 +61,10 @@ function Shares() {
   const mutation = useMutation(createPost, {
     onSuccess: async () => {
       queryClient.invalidateQueries(["Posts"]);
-      setDesc("");
-      setFile(null);
+      setUpdatedDesc("");
+      setUpdatedFile(null);
       setSelectedTags("");
+      handleEditDialogOpen();
     },
   });
 
@@ -72,23 +74,18 @@ function Shares() {
   };
 
   return (
-    <div className="share">
-      <div className="container">
-        <Link
-          to={`/profile/${currentUser._id}`}
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
-          <div className="userInfo">
-            <img src={currentUser.profilePic} alt="avatar" />
-            <span className="name">{currentUser.userName}</span>
-          </div>
-        </Link>
+    <div className="edit">
+      <div className="modal">
         <div className="content">
+          <button onClick={handleEditDialogOpen} className="close-button">
+            &times;
+          </button>
+          <h2>Edit the post</h2>
           <input
             type="text"
-            value={desc}
-            placeholder={`What's on your mind, undefined?`}
-            onChange={(e) => setDesc(e.target.value)}
+            value={updatedDesc.desc}
+            name="desc"
+            onChange={handleChange}
           />
           {selectedTags ? (
             <label>
@@ -96,14 +93,13 @@ function Shares() {
               <span>{selectedTags}</span>
             </label>
           ) : null}
-          {file ? (
+          {updatedFile ? (
             <label>
               <TextSnippetIcon />
-              <span>{file.name}</span>
+              <span>{updatedFile.name}</span>
             </label>
           ) : null}
         </div>
-        <hr />
         <div className="attachment">
           <div className="left">
             <div className="item">
@@ -125,7 +121,7 @@ function Shares() {
               <input
                 type="file"
                 id="file"
-                onChange={(e) => setFile(e.target.files[0])}
+                onChange={(e) => setUpdatedFile(e.target.files[0])}
               />
               <label htmlFor="file">
                 <InsertPhotoIcon />
@@ -142,4 +138,4 @@ function Shares() {
   );
 }
 
-export default Shares;
+export default EditPost;
