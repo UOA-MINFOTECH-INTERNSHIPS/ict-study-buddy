@@ -1,16 +1,15 @@
+import "./editPost.scss";
 import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import TagIcon from "@mui/icons-material/Tag";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
-
 import SimpleDialog from "../tags/Tag";
-
 import { useState } from "react";
 
-function EditPost({ handleEditDialogOpen, post }) {
-  const [updatedDesc, setUpdatedDesc] = useState({ desc: post.desc });
-  const [updatedFile, setUpdatedFile] = useState({ file: post.file }); // Initialize the uploaded file to null.
+function EditPost({ handleEditDialogOpen, handleMoreOpen, post }) {
+  const [updatedDesc, setUpdatedDesc] = useState(post.desc);
+  const [updatedFile, setUpdatedFile] = useState(post.file); // Initialize the uploaded file to null.
   const [open, setOpen] = useState(false); // Set the Add Tags feature status to closed by default.
   const [selectedTags, setSelectedTags] = useState(post.tags); // Initialize selectedTags to null.
 
@@ -65,6 +64,7 @@ function EditPost({ handleEditDialogOpen, post }) {
       setUpdatedFile(null);
       setSelectedTags("");
       handleEditDialogOpen();
+      handleMoreOpen();
     },
   });
 
@@ -75,63 +75,65 @@ function EditPost({ handleEditDialogOpen, post }) {
 
   return (
     <div className="edit">
-      <div className="modal">
-        <div className="content">
-          <button onClick={handleEditDialogOpen} className="close-button">
-            &times;
-          </button>
-          <h2>Edit the post</h2>
-          <input
-            type="text"
-            value={updatedDesc.desc}
-            name="desc"
-            onChange={handleChange}
-          />
-          {selectedTags ? (
-            <label>
-              <TagIcon />
-              <span>{selectedTags}</span>
-            </label>
-          ) : null}
-          {updatedFile ? (
-            <label>
-              <TextSnippetIcon />
-              <span>{updatedFile.name}</span>
-            </label>
-          ) : null}
-        </div>
-        <div className="attachment">
-          <div className="left">
-            <div className="item">
-              <div className="tag">
-                <br />
-                <input type="button" id="tags" onClick={handleClickOpen} />
-                <label htmlFor="tags">
-                  <TagIcon />
-                  <span htmlFor="tags">Add Tags</span>
-                </label>
-                <SimpleDialog
-                  selectedTags={selectedTags}
-                  open={open}
-                  onClose={handleClose}
-                />
-              </div>
-            </div>
-            <div className="item">
-              <input
-                type="file"
-                id="file"
-                onChange={(e) => setUpdatedFile(e.target.files[0])}
-              />
-              <label htmlFor="file">
-                <InsertPhotoIcon />
-                <span htmlFor="file">Add File</span>
+      <div className="top">
+        <h2>Edit the post</h2>
+        <button onClick={handleEditDialogOpen} className="close-button">
+          &times;
+        </button>
+      </div>
+
+      <div className="content">
+        <input
+          type="text"
+          value={updatedDesc}
+          name="desc"
+          onChange={handleChange}
+        />
+        {selectedTags ? (
+          <label>
+            <TagIcon />
+            <span>{selectedTags}</span>
+          </label>
+        ) : null}
+        {updatedFile ? (
+          <label>
+            <TextSnippetIcon />
+            <span>{updatedFile.name}</span>
+          </label>
+        ) : null}
+      </div>
+      <hr />
+      <div className="attachment">
+        <div className="left">
+          <div className="item">
+            <div className="tag">
+              <br />
+              <input type="button" id="updatedTags" onClick={handleClickOpen} />
+              <label htmlFor="updatedTags">
+                <TagIcon />
+                <span htmlFor="updatedTags">Add Tags</span>
               </label>
+              <SimpleDialog
+                selectedTags={selectedTags}
+                open={open}
+                onClose={handleClose}
+              />
             </div>
           </div>
-          <div className="right">
-            <button onClick={handlePost}>Post</button>
+          <div className="item">
+            <input
+              type="file"
+              id="updatedFile"
+              onChange={(e) => setUpdatedFile(e.target.files[0])}
+            />
+            <label htmlFor="updatedFile">
+              <InsertPhotoIcon />
+              <span htmlFor="updatedFile">Add File</span>
+            </label>
           </div>
+        </div>
+        <div className="right">
+          <button onClick={handlePost}>Post</button>
         </div>
       </div>
     </div>

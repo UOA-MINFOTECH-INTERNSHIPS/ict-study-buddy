@@ -8,25 +8,24 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useState, useContext } from "react";
-import { AuthContext } from "../../context/authContext";
+import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 import EditPost from "../editPost/EditPost";
-import { Popover, Typography } from "@mui/material";
 
-function MorePopover({ postId, post }) {
-  const { currentUser } = useContext(AuthContext); //Get currentUser's infos.
-
+function MorePopover({ postId, post, handleMoreOpen }) {
+  const [optionOpen, setOptionOpen] = useState(true);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [editDialogOpne, setEditDialogOpen] = useState(false);
 
   const handleDeleteDialogOpen = () => {
     setDeleteDialogOpen(!deleteDialogOpen);
+    setOptionOpen(!optionOpen);
   };
 
   const handleEditDialogOpen = () => {
     setEditDialogOpen(!editDialogOpne);
+    setOptionOpen(!optionOpen);
   };
 
   const handleDeletePost = async () => {
@@ -55,46 +54,50 @@ function MorePopover({ postId, post }) {
 
   return (
     <div className="popover">
-      <div className="container">
-        {/* <EditPost /> */}
-        <Button
-          startIcon={<EditIcon />}
-          className="item"
-          onClick={handleEditDialogOpen}
-        >
-          Edit
-        </Button>
-        <Button
-          startIcon={<DeleteIcon />}
-          className="item"
-          onClick={handleDeleteDialogOpen}
-        >
-          Delete
-        </Button>
-        <Dialog
-          open={deleteDialogOpen}
-          onClose={handleDeleteDialogOpen}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle id="alert-dialog-title">
-            {"Do you want to delete this post?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              This action can not be canceled.
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleDeleteDialogOpen}>Cancel</Button>
-            <Button onClick={handleDeleteDialog} autoFocus>
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
+      <div className="wrapper">
+        {optionOpen && (
+          <div className="container">
+            <button onClick={handleMoreOpen} className="close-button">
+              &times;
+            </button>
+            <button className="btn" onClick={handleEditDialogOpen}>
+              <EditIcon />
+              <span>Edit</span>
+            </button>
+            <button className="btn" onClick={handleDeleteDialogOpen}>
+              <DeleteIcon />
+              <span>Delete</span>
+            </button>
+          </div>
+        )}
       </div>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleDeleteDialogOpen}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Do you want to delete this post?"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            This action can not be canceled.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteDialogOpen}>Cancel</Button>
+          <Button onClick={handleDeleteDialog} autoFocus>
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
       {editDialogOpne && (
-        <EditPost handleEditDialogOpen={handleEditDialogOpen} post={post} />
+        <EditPost
+          handleEditDialogOpen={handleEditDialogOpen}
+          handleMoreOpen={handleMoreOpen}
+          post={post}
+        />
       )}
     </div>
   );

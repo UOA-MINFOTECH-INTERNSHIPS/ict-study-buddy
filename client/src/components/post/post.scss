@@ -45,7 +45,9 @@
         .more {
           cursor: pointer;
           color: themed("textColor");
+          position: relative;
         }
+
         .dialog {
           display: inline;
         }
