@@ -7,7 +7,6 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import DownloadIcon from "@mui/icons-material/Download";
 import Button from "@mui/material/Button";
-import Popover from "@mui/material/Popover";
 import MorePopover from "../morePopover/MorePopover";
 import Comments from "../comments/Comments";
 import { useState, useContext } from "react";
@@ -25,16 +24,11 @@ function Post({ post }) {
   const [commentOpen, setCommentOpen] = useState(false);
   const [commentsCount, setCommentsCount] = useState(post.comments.length);
 
-  // Open the popper
-  const [anchorEl, setAnchorEl] = useState(null);
-  const handleMoreOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const [openMore, setOpenMore] = useState(false);
+
+  const handleMoreOpen = () => {
+    setOpenMore(!openMore);
   };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
 
   const handleLike = async () => {
     try {
@@ -77,18 +71,14 @@ function Post({ post }) {
               <MoreHorizIcon />
             </Button>
           )}
-          <Popover
-            id={id}
-            open={open}
-            anchorEl={anchorEl}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-          >
-            <MorePopover postId={post._id} post={post}/>
-          </Popover>
+
+          {openMore && (
+            <MorePopover
+              postId={post._id}
+              post={post}
+              handleMoreOpen={handleMoreOpen}
+            />
+          )}
         </div>
         <div className="content">
           <p>{post.desc}</p>
