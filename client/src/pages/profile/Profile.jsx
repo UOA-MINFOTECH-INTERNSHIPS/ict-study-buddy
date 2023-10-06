@@ -6,12 +6,11 @@ import { makeRequest } from "../../axios";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-
+import React, { useEffect } from 'react';
 function Profile() {
   const userId = useParams().userId;
   const { currentUser } = useContext(AuthContext);
 
-  //Get profile user infos.
   const {
     isLoading,
     error,
@@ -30,6 +29,9 @@ function Profile() {
         return res.data;
       })
   );
+  useEffect(()=>{
+    console.log("in profile page", userId, currentUser._id)
+})
 
   const queryClient = useQueryClient();
 
