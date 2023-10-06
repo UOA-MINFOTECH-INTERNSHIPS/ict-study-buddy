@@ -8,7 +8,7 @@ import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/authContext";
@@ -27,14 +27,33 @@ function NavBar() {
   const navigate = useNavigate();
 
   const handleSearch = async () => {
+    if (query.trim() === "") {
+      return;
+    }
     try {
       await search(query);
       navigate(`/search/${query}`);
-      setQuery('');
+      setQuery("");
     } catch (error) {
       console.log("error", error);
     }
   };
+  // Define a function to handle Enter key press
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  useEffect(() => {
+    // Add an event listener for key presses
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []); // Empty dependency array to ensure the effect runs only once
 
   return (
     <div className="navbar">
@@ -53,14 +72,15 @@ function NavBar() {
 
         <GridViewOutlinedIcon />
         <div className="search">
-          <SearchOutlinedIcon />
           <input
             type="text"
             placeholder="Search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button onClick={handleSearch}>Search</button>
+          <button onClick={handleSearch}>
+            <SearchOutlinedIcon />
+          </button>
         </div>
       </div>
       <div className="right">
