@@ -156,4 +156,25 @@ router.put("/:id/like", async (req, res) => {
   }
 });
 
+// Get posts created in the last two days
+router.get("/recent-posts", async (req, res) => {
+  try {
+    // Calculate the date two days ago from the current date
+    const oneDayAgo = new Date();
+    oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+
+    // Find posts created after two days ago
+    const recentPosts = await Post.find({
+      createdAt: { $gte: oneDayAgo },
+    }).populate({
+      path: "userInfos",
+      select: "userName profilePic",
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json(recentPosts);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 export default router;

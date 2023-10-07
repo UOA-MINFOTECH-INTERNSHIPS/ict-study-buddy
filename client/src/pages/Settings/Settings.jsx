@@ -419,7 +419,7 @@ function Settings() {
                                         <div className="friend-name" style={{"font-weight": "bold","font-size": "large"}}>{blockedUsers.userName}</div>
                                     </div>
                                     <div className="friend-info">
-                                        <button onClick={(e)=>cancelShielding(e,blockedUsers._id)} className="btn_edit">Cancel the shielding</button>
+                                        <button onClick={(e)=>cancelShielding(e,blockedUsers._id)} className="btn_edit">Release</button>
                                     </div>
                                 </div>
                             ))}

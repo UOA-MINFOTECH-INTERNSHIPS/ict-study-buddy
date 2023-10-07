@@ -1,4 +1,4 @@
-import "./messenger.css";
+import "./messenger.scss";
 import Conversation from "../../components/conversations/Conversation";
 import Message from "../../components/message/Message";
 import ChatOnline from "../../components/chatOnline/ChatOnline";
@@ -151,71 +151,69 @@ export default function Messenger() {
   }, [messages]);
 
   return (
-    <>
-      <div className="messenger">
-        <div className="chatMenu">
-          <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
-            {conversations.map((c, index) => (
-              <div onClick={() => setCurrentChat(c)} key={index}>
-                <Conversation conversation={c} currentUser={currentUser} />
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="chatBox">
-          <div className="chatBoxWrapper">
-            {currentChat ? (
-              <>
-                <div className="chatBoxTop">
-                  {messages.map((m, index) => (
-                    <div ref={scrollRef} key={index}>
-                      <Message message={m} own={m.sender === currentUser._id} />
-                    </div>
-                  ))}
-                </div>
-                <div className="chatBoxBottom">
-                  <textarea
-                    className="chatMessageInput"
-                    placeholder="write something..."
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    value={newMessage}
-                  ></textarea>
-
-                  <div className="item">
-                    <input
-                      type="file"
-                      id="fileInput"
-                      className="fileUpload"
-                      onChange={(e) => setSelectedFile(e.target.files[0])}
-                    />
-                    <label htmlFor="fileInput">
-                      <InsertPhotoIcon />
-                    </label>
-                    <button onClick={handleUpload}>Upload File</button>
-                  </div>
-                  <button className="chatSubmitButton" onClick={handleSubmit}>
-                    Send
-                  </button>
-                </div>
-              </>
-            ) : (
-              <span className="noConversationText">
-                Open a conversation to start a chat.
-              </span>
-            )}
-          </div>
-        </div>
-        <div className="chatOnline">
-          <div className="chatOnlineWrapper">
-            <ChatOnline
-              onlineUsers={onlineUsers}
-              currentId={currentUser._id}
-              setCurrentChat={setCurrentChat}
-            />
-          </div>
+    <div className="messenger">
+      <div className="chatMenu">
+        <div className="chatMenuWrapper">
+          <input placeholder="Search for friends" className="chatMenuInput" />
+          {conversations.map((c, index) => (
+            <div onClick={() => setCurrentChat(c)} key={index}>
+              <Conversation conversation={c} currentUser={currentUser} />
+            </div>
+          ))}
         </div>
       </div>
-    </>
+      <div className="chatBox">
+        <div className="chatBoxWrapper">
+          {currentChat ? (
+            <>
+              <div className="chatBoxTop">
+                {messages.map((m, index) => (
+                  <div ref={scrollRef} key={index}>
+                    <Message message={m} own={m.sender === currentUser._id} />
+                  </div>
+                ))}
+              </div>
+              <div className="chatBoxBottom">
+                <textarea
+                  className="chatMessageInput"
+                  placeholder="write something..."
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  value={newMessage}
+                ></textarea>
+
+                <div className="chatSendFile">
+                  <input
+                    type="file"
+                    id="fileInput"
+                    className="fileUpload"
+                    onChange={(e) => setSelectedFile(e.target.files[0])}
+                  />
+                  <label htmlFor="fileInput">
+                    <InsertPhotoIcon />
+                  </label>
+                  <button onClick={handleUpload}>Upload File</button>
+                </div>
+                <button className="chatSubmitButton" onClick={handleSubmit}>
+                  Send
+                </button>
+              </div>
+            </>
+          ) : (
+            <span className="noConversationText">
+              Open a conversation to start a chat.
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="chatOnline">
+        <div className="chatOnlineWrapper">
+          <ChatOnline
+            onlineUsers={onlineUsers}
+            currentId={currentUser._id}
+            setCurrentChat={setCurrentChat}
+          />
+        </div>
+      </div>
+    </div>
   );
 }

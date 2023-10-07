@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import "./chatOnline.css";
+import "./chatOnline.scss";
 import { makeRequest } from "../../axios";
 
 export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
@@ -48,7 +47,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
             />
             <div className="chatOnlineBadge"></div>
           </div>
-          <span className="chatOnlineName">{o?.username}</span>
+          <span className="chatOnlineName">{o?.userName}</span>
         </div>
       ))}
     </div>
