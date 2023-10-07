@@ -1,12 +1,12 @@
-import axios from "axios";
+import "./conversation.scss";
 import { useEffect, useState } from "react";
-import "./conversation.css";
 import { makeRequest } from "../../axios";
 
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+  console.log('user',user);
 
   useEffect(() => {
     const friendId = conversation.members.find((m) => m !== currentUser._id);
@@ -33,7 +33,7 @@ export default function Conversation({ conversation, currentUser }) {
         }
         alt=""
       />
-      <span className="conversationName">{user?.username}</span>
+      <span className="conversationName">{user?.userName}</span>
     </div>
   );
 }

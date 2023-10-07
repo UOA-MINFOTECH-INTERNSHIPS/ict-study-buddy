@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
 import "./message.css";
+import { useContext, useEffect, useState } from "react";
 import { format } from "timeago.js";
 import { AuthContext } from "../../context/authContext";
 import { makeRequest } from "../../axios";
