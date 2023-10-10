@@ -78,8 +78,8 @@ password: dsfasdf
 ```
 
 You will be directed to the homepage once you log in to the App. Here is the homepage.
+<img width="1512" alt="HomePage" src="https://github.com/UOA-MINFOTECH-INTERNSHIPS/ict-study-buddy/assets/80732580/d676282e-f12b-4961-9623-5f3c3a2dd885">
 
-<img width="1512" alt="HomePage" src="https://github.com/UOA-MINFOTECH-INTERNSHIPS/ict-study-buddy/assets/80732580/c6a4e97c-d6c2-4c23-92a1-7c91d2e69c32">
 
 
 
