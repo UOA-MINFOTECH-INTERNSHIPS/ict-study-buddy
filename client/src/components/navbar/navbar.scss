@@ -25,6 +25,11 @@
         font-size: 20px;
         color: themed("logo");
       }
+      .items {
+        color: themed("textColor");
+        cursor: pointer;
+      }
+
       // SearchBar style
       .search {
         display: flex;
@@ -33,16 +38,21 @@
         border: 1px solid themed("border");
         border-radius: 5px;
         padding: 5px;
+
         input {
           border: none;
+          outline: none;
           width: 500px;
           background: transparent;
           color: themed("textColor");
 
-          @include mobile{
+          @include mobile {
             display: none;
           }
-
+        }
+        button {
+          border: none;
+          background: none;
         }
       }
     }
@@ -50,8 +60,13 @@
       display: flex;
       align-items: center;
       gap: 30px;
-      @include mobile{
+      @include mobile {
         display: none;
+      }
+
+      .items {
+        color: themed("textColor");
+        cursor: pointer;
       }
 
       .user {
@@ -66,9 +81,6 @@
           border-radius: 50%;
           object-fit: cover;
         }
-        // span {
-
-        // }
       }
     }
   }

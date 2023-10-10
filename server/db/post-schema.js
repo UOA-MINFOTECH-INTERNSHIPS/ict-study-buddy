@@ -2,16 +2,26 @@ import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema(
   {
-    userId: {
+    userInfos: {
       type: String,
       required: true,
+      ref: "User",
     },
     desc: {
       type: String,
       max: 500,
     },
-    img: {
+    file: {
+      name: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
+    tags: {
       type: String,
+      default: "",
     },
     likes: {
       type: Array,

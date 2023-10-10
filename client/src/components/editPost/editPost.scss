@@ -1,0 +1,104 @@
+@import "../../style.scss";
+
+.edit {
+  @include themify($themes) {
+    background-color: themed("bg");
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .top {
+      .close-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #8095ff;
+      }
+    }
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      padding: 20px 10px;
+
+      input {
+        width: 60%;
+        height: 100%;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        color: themed("textColor");
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        color: #8095ff;
+        gap: 10px;
+        cursor: pointer;
+      }
+    }
+
+    hr {
+      margin: 5px 0;
+      height: 0.5px;
+      background-color: themed("border");
+      border: none;
+    }
+    
+    .attachment {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+
+      .left {
+        display: flex;
+        align-items: flex-end;
+        gap: 20px;
+        .item {
+          padding: 5px;
+
+          input {
+            display: none;
+          }
+
+          label {
+            display: flex;
+            align-items: center;
+            color: #8095ff;
+            gap: 10px;
+            cursor: pointer;
+          }
+
+          span {
+            color: themed("textColorSoft");
+          }
+        }
+      }
+      .right {
+        button {
+          border: none;
+          border-radius: 4px;
+          padding: 10px 15px;
+          margin-left: 20px;
+          color: white;
+          background-color: #8095ff;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

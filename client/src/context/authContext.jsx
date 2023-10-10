@@ -1,6 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import React from "react";
-
+import { makeRequest } from "../axios";
 
 export const AuthContext = createContext();
 
@@ -9,13 +8,12 @@ export const AuthContextProvider = ({ children }) => {
     JSON.parse(localStorage.getItem("user")) || null
   );
 
-  const login = () => {
-    setCurrentUser({
-      id: 1,
-      name: "Jenny chen",
-      profilePic:
-        "https://images.pexels.com/photos/16943679/pexels-photo-16943679/free-photo-of-ranti-marsyanda-chandri-anggara.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+  const login = async (user) => {
+    const res = await makeRequest.post("/auth/login", user, {
+      withCredentials: true,
     });
+
+    setCurrentUser(res.data);
   };
 
   useEffect(() => {

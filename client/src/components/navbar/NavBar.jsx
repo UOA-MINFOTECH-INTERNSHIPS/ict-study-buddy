@@ -1,5 +1,4 @@
 import "./navbar.scss";
-import * as React from "react";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import WbSunnyOutlinedIcon from "@mui/icons-material/WbSunnyOutlined";
@@ -9,14 +8,52 @@ import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { Link } from "react-router-dom";
-import photo from "../../assets/register-background-pic.jpg";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
+import { AuthContext } from "../../context/authContext";
 import { DarkModeContext } from "../../context/darkModeContext";
+import { SearchContext } from "../../context/searchContext";
 
-
-function NavBar(props) {
+function NavBar() {
   const { toggle, darkMode } = useContext(DarkModeContext);
+
+  const { currentUser } = useContext(AuthContext);
+
+  const { search } = useContext(SearchContext);
+
+  const [query, setQuery] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleSearch = async () => {
+    if (query.trim() === "") {
+      return;
+    }
+    try {
+      await search(query);
+      navigate(`/search/${query}`);
+      setQuery("");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+  // Define a function to handle Enter key press
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
+
+  useEffect(() => {
+    // Add an event listener for key presses
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []); // Empty dependency array to ensure the effect runs only once
 
   return (
     <div className="navbar">
@@ -24,32 +61,39 @@ function NavBar(props) {
         <Link to="/" style={{ textDecoration: "none" }}>
           <span>Study Buddy</span>
         </Link>
-        <HomeOutlinedIcon />
-
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <HomeOutlinedIcon className="items" />
+        </Link>
         {darkMode ? (
-          <DarkModeOutlinedIcon
-            onClick={toggle}
-            style={{ cursor: "pointer" }}
-          />
+          <DarkModeOutlinedIcon onClick={toggle} />
         ) : (
-          <WbSunnyOutlinedIcon onClick={toggle} style={{ cursor: "pointer" }} />
+          <WbSunnyOutlinedIcon onClick={toggle} />
         )}
-
-        {/* <WbSunnyOutlinedIcon style={{ cursor: "pointer" }} /> */}
 
         <GridViewOutlinedIcon />
         <div className="search">
-          <SearchOutlinedIcon />
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <button onClick={handleSearch}>
+            <SearchOutlinedIcon />
+          </button>
         </div>
       </div>
       <div className="right">
-        <PersonOutlinedIcon />
-        <MessageOutlinedIcon />
+        <Link to={"/settings"}>
+          <PersonOutlinedIcon className="items" />
+        </Link>
+        <Link to="/messenger">
+          <MessageOutlinedIcon className="items" />
+        </Link>
         <NotificationsOutlinedIcon />
         <div className="user">
-          <img src={photo} />
-          <span>Jenny</span>
+          <img src={currentUser.profilePic} />
+          <span>{currentUser.userName}</span>
         </div>
       </div>
     </div>

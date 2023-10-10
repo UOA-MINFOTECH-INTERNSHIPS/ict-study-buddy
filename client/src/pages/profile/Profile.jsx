@@ -1,101 +1,134 @@
-import * as React from "react";
 import "./profile.scss";
-import PlaceIcon from "@mui/icons-material/Place";
-import LanguageIcon from "@mui/icons-material/Language";
-import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Posts from "../../components/posts/Posts";
 import RightBar from "../../components/rightbar/RightBar";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { makeRequest } from "../../axios";
+import { useParams } from "react-router-dom";
 import { useContext } from "react";
-
 import { AuthContext } from "../../context/authContext";
-
-function Profile(props) {
+import React, { useEffect } from 'react';
+function Profile() {
+  const userId = useParams().userId;
   const { currentUser } = useContext(AuthContext);
+
+  const {
+    isLoading,
+    error,
+    data: user,
+  } = useQuery(["user"], () =>
+    makeRequest.get(`/users/${userId}`).then((res) => {
+      return res.data;
+    })
+  );
+
+  //Get profile user followers.
+  const { isLoading: followerLoading, data: followers } = useQuery(
+    ["followers"],
+    () =>
+      makeRequest.get(`/connection/${userId}/followers`).then((res) => {
+        return res.data;
+      })
+  );
+  useEffect(()=>{
+    console.log("in profile page", userId, currentUser._id)
+})
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(
+    () => {
+      return makeRequest.put(`/connection/${user._id}/follow`);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["followers"]);
+      },
+    }
+  );
+
+  const handleFollow = () => {
+    mutation.mutate();
+  };
+
+  if (error) return "An error has occurred: " + error.message;
 
   return (
     <div className="profile">
-      <div className="left">
-        <div className="profileContainer">
-          <div className="images">
-            <img
-              src={
-                "https://images.pexels.com/photos/5169050/pexels-photo-5169050.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              }
-              alt=""
-              className="cover"
-            />
-            <img
-              src={
-                "https://images.pexels.com/photos/16943679/pexels-photo-16943679/free-photo-of-ranti-marsyanda-chandri-anggara.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              }
-              alt=""
-              className="profilePic"
-            />
-          </div>
-          <div className="uInfo">
-            <div className="uInfoLeft">
-              <div className="userName">{currentUser.name}</div>
-              <div className="userDesc">
-                Final year postgraduate student at Information Technology
+      {isLoading ? (
+        "Loading..."
+      ) : (
+        <>
+          <div className="left">
+            <div className="profileContainer">
+              <div className="images">
+                <img src={user.cover} alt="" className="cover" />
+                <img src={user.profilePic} alt="" className="profilePic" />
               </div>
-              <div className="major">Master of Information Technology</div>
-            </div>
-            <div className="uInfoRight">
-              <div className="items">
-                <div className="item">
-                  <div className="count">100</div>
-                  <span>Followings</span>
+              <div className="uInfo">
+                <div className="uInfoLeft">
+                  <div className="userName">{user.userName}</div>
+                  <div className="userDesc">{user.desc}</div>
+                  <div className="major">{user.major}</div>
                 </div>
-                <div className="item">
-                  <div className="count">102</div>
-                  <span>Followers</span>
+                <div className="uInfoRight">
+                  <div className="items">
+                    <div className="item">
+                      <div className="count">{user.followings.length}</div>
+                      <span>Followings</span>
+                    </div>
+                    <div className="item">
+                      <div className="count">{followers.length}</div>
+                      <span>Followers</span>
+                    </div>
+                  </div>
+                  {userId === currentUser._id ? (
+                    <></>
+                  ) : (
+                    <div className="connect">
+                      {followerLoading ? (
+                        "Loading..."
+                      ) : followers.includes(currentUser._id) ? (
+                        <button className="messageBtn" onClick={handleFollow}>
+                          Following
+                        </button>
+                      ) : (
+                        <button className="follow" onClick={handleFollow}>
+                          Follow
+                        </button>
+                      )}
+
+                      <button className="messageBtn">Message</button>
+                    </div>
+                  )}
                 </div>
-                <div className="item">
-                  <div className="count">102</div>
-                  <span>Posts</span>
+              </div>
+            </div>
+            <div className="highlight">
+              <span>Highlights</span>
+              <div className="highlightContainer">
+                <div className="courses">
+                  <div className="title">Courses</div>
+                  <div className="items">
+                    {user.courses.map((course) => (
+                      <div className="item">{course}</div>
+                    ))}
+                  </div>
+                </div>
+                <div className="skills">
+                  <div className="title">Skills</div>
+                  <div className="items">
+                    {user.skills.map((skill) => (
+                      <div className="item">{skill}</div>
+                    ))}
+                  </div>
                 </div>
               </div>
-              <div className="connect">
-                <button className="follow">Follow</button>
-                <button className="message">Message</button>
-              </div>
             </div>
+            <Posts userId={user._id} />
           </div>
-        </div>
-        <div className="highlight">
-          <span>Highlights</span>
-          <div className="highlightContainer">
-            <div className="courses">
-              <div className="title">Courses</div>
-              <div className="items">
-                <div className="item">COMPSC 732</div>
-                <div className="item">COMPSC 751</div>
-                <div className="item">COMPSC 762</div>
-                <div className="item">COMPSC 752</div>
-                <div className="item">COMPSC 704</div>
-                <div className="item">COMPSC 704</div>
-                <div className="item">COMPSC 704</div>
-                <div className="item">COMPSC 704</div>
-              </div>
-            </div>
-            <div className="skills">
-              <div className="title">Skills</div>
-              <div className="items">
-                <div className="item">JavaScript</div>
-                <div className="item">Python</div>
-                <div className="item">TypeScript</div>
-                <div className="item">MongoDB</div>
-                <div className="item">JavaScript</div>
-                <div className="item">JavaScript</div>
-                <div className="item">JavaScript</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <Posts />
-      </div>
-      <RightBar />
+          <RightBar />
+        </>
+      )}
     </div>
   );
 }

@@ -1,0 +1,23 @@
+@import "../../style.scss";
+
+.search {
+  @include themify($themes) {
+    display: flex;
+    
+    .searchCenter {
+      background-color: themed("bgSoft");
+      padding: 20px 50px;
+      flex: 8;
+      .title {
+        color: themed("textColor");
+      }
+      .results {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+        }
+      }
+    }
+  }
+

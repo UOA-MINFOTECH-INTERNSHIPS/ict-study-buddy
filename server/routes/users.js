@@ -4,17 +4,10 @@ import bcrypt from "bcrypt";
 
 const router = express.Router();
 
-// GET A USER BY USERNAME OR USERID
-router.get("/:identifier", async (req, res) => {
+// GET A USER BY USERID
+router.get("/:id", async (req, res) => {
   try {
-    const identifier = req.params.identifier;
-
-    let user;
-    if (identifier.length === 24) {
-      user = await User.findById(identifier);
-    } else {
-      user = await User.findOne({ userName: identifier });
-    }
+    const user = await User.findById(req.params.id);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -57,12 +50,32 @@ router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     try {
       await User.findByIdAndDelete(req.params.id);
-      res.status(200).json("Account has been deleted");
+      res.status(204).json("Account has been deleted");
     } catch (error) {
       return res.status(500).json(error);
     }
   } else {
     return res.status(403).json("You can delete only your account!");
+  }
+});
+
+//get friends
+router.get("/friends/:userId", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    const friends = await Promise.all(
+      user.followings.map((friendId) => {
+        return User.findById(friendId);
+      })
+    );
+    let friendList = [];
+    friends.map((friend) => {
+      const { _id, userName, profilePic } = friend;
+      friendList.push({ _id, userName, profilePic });
+    });
+    res.status(200).json(friendList)
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 

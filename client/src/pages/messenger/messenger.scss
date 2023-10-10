@@ -1,0 +1,98 @@
+@import "../../style.scss";
+
+.messenger {
+  @include themify($themes) {
+    // background-color: themed("bgSoft");
+    color: themed("textColor");
+    height: calc(100vh - 70px);
+    display: flex;
+
+    .chatMenu {
+      padding: 20px 50px;
+      background-color: themed("bgSoft");
+      flex: 2;
+      // background-color: themed("bgSoft");
+
+      .chatMenuWrapper {
+        background-color: themed("bg");
+        padding: 10px;
+        height: 100%;
+
+        .chatMenuInput {
+          width: 90%;
+          padding: 10px 0;
+          border: none;
+          border-bottom: 1px solid gray;
+        }
+      }
+    }
+    .chatBox {
+      flex: 8;
+      background-color: themed("bgSoft");
+      padding: 20px;
+
+
+      .chatBoxWrapper {
+        padding: 20px 50px;
+        background-color: themed("bg");
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+
+        .noConversationText {
+          position: absolute;
+          top: 10%;
+          font-size: 50px;
+          color: rgb(224, 220, 220);
+          cursor: default;
+        }
+
+        .chatBoxTop {
+          height: 100%;
+          overflow-y: scroll;
+          // padding-right: 10px;
+        }
+
+        .chatBoxBottom {
+          margin-top: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .chatMessageInput {
+            width: 80%;
+            height: 90px;
+            padding: 10px;
+          }
+          .chatSendFile{
+            color: #8095ff;
+
+            .fileUpload {
+              display: none;
+            }
+          }
+          .chatSubmitButton {
+            width: 70px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #8095ff;
+            color: white;
+          }
+        }
+      }
+    }
+
+    .chatOnline {
+      flex: 2;
+      .chatOnlineWrapper {
+        background-color: themed("bg");
+        padding: 10px;
+        height: 100%;
+      }
+    }
+  }
+}

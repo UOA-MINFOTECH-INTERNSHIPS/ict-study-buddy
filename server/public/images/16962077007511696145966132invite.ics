@@ -1,0 +1,114 @@
+BEGIN:VCALENDAR
+METHOD:REQUEST
+PRODID:Microsoft Exchange Server 2010
+VERSION:2.0
+BEGIN:VTIMEZONE
+TZID:New Zealand Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T030000
+TZOFFSETFROM:+1300
+TZOFFSETTO:+1200
+RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=4
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010101T020000
+TZOFFSETFROM:+1200
+TZOFFSETTO:+1300
+RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=-1SU;BYMONTH=9
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+ORGANIZER;CN=Deepali Dhingra:mailto:Deepali.Dhingra@spark.co.nz
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=Gareth Kil
+ lip:mailto:Gareth.Killip@spark.co.nz
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=Caroline A
+ rwanitis:mailto:Caroline.Arwanitis@spark.co.nz
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=monica.zha
+ ng.nz@gmail.com:mailto:monica.zhang.nz@gmail.com
+ATTACH:CID:6B319CB6944EFC47AE7AE4DA7576C397@ausprd01.prod.outlook.com
+DESCRIPTION;LANGUAGE=en-US:Hi Monica\,\n\nPlease use below link to join the
+  interview. This is the interview for role of “Graduate Software Develop
+ er”.\nThis is a remote interview so please make sure camera and micropho
+ ne is working fine.\n\n@Gareth Killip<mailto:Gareth.Killip@spark.co.nz> an
+ d @Caroline Arwanitis<mailto:Caroline.Arwanitis@spark.co.nz> please find a
+ ttached her resume. She is also ok to come to office \, if you want her to
+  – Please give her a call 02885203040<tel:02885203040> if you want to ch
+ ange it.\n\nThanks\nDeepali Dhingra\n\n___________________________________
+ _____________________________________________\nMicrosoft Teams meeting\nJo
+ in on your computer\, mobile app or room device\nClick here to join the me
+ eting<https://teams.microsoft.com/l/meetup-join/19%3ameeting_ZGYzNDZmMjUtN
+ TU1MS00YzgwLWI2ODgtNjNjZjk5NDg4N2Uz%40thread.v2/0?context=%7b%22Tid%22%3a%
+ 22f6b3cec6-a862-4a40-9ab4-00d6e11e6f0f%22%2c%22Oid%22%3a%22e1c38b58-e0d7-4
+ 37c-99df-9ce926bab4e1%22%7d>\nMeeting ID: 489 854 740 006\nPasscode: sxMuq
+ w\nDownload Teams<https://www.microsoft.com/en-us/microsoft-teams/download
+ -app> | Join on the web<https://www.microsoft.com/microsoft-teams/join-a-m
+ eeting>\nJoin with a video conferencing device\nteams@vc.spark.nz\nVideo C
+ onference ID: 133 699 516 6\nAlternate VTC instructions<https://pexip.me/t
+ eams/vc.spark.nz/1336995166>\nOr call in (audio only)\n+64 9-888 8484\,\,1
+ 59106888#<tel:+6498888484\,\,159106888#>   New Zealand\, Auckland\nPhone C
+ onference ID: 159 106 888#\nFind a local number<https://dialin.teams.micro
+ soft.com/ad4b4a73-6b7b-4b6c-8d1a-39214649ffc8?id=159106888> | Reset PIN<ht
+ tps://dialin.teams.microsoft.com/usp/pstnconferencing>\n[https://www.spark
+ .co.nz/content/dam/sparkdigital/images/logo/purple.png]\nNew Zealand Toll 
+ Free Number # tel:0800683267\nLearn More<https://aka.ms/JoinTeamsMeeting> 
+ | Meeting options<https://teams.microsoft.com/meetingOptions/?organizerId=
+ e1c38b58-e0d7-437c-99df-9ce926bab4e1&tenantId=f6b3cec6-a862-4a40-9ab4-00d6
+ e11e6f0f&threadId=19_meeting_ZGYzNDZmMjUtNTU1MS00YzgwLWI2ODgtNjNjZjk5NDg4N
+ 2Uz@thread.v2&messageId=0&language=en-NZ>\n_______________________________
+ _________________________________________________\n_______________________
+ _________\n\nThis email\, including any attachments\, is confidential. If 
+ you have received this email in error\, please let me know and then delete
+  it - do not read\, use\, or distribute it or its contents. This email doe
+ s not designate an information system for the purposes of the Contract and
+  Commercial Law Act 2017.\n\n
+UID:040000008200E00074C5B7101A82E008000000000998E92E80E7D901000000000000000
+ 0100000006E5F8092C80D27409FB1CFCDB95974FA
+SUMMARY;LANGUAGE=en-US:Interview with Monica Zhang
+DTSTART;TZID=New Zealand Standard Time:20230926T150000
+DTEND;TZID=New Zealand Standard Time:20230926T160000
+CLASS:PUBLIC
+PRIORITY:5
+DTSTAMP:20230918T043735Z
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+SEQUENCE:1
+LOCATION;LANGUAGE=en-US:Microsoft Teams Meeting
+X-MICROSOFT-CDO-APPT-SEQUENCE:1
+X-MICROSOFT-CDO-OWNERAPPTID:2121891081
+X-MICROSOFT-CDO-BUSYSTATUS:FREE
+X-MICROSOFT-CDO-INTENDEDSTATUS:FREE
+X-MICROSOFT-CDO-ALLDAYEVENT:FALSE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:0
+X-MICROSOFT-ONLINEMEETINGEXTERNALLINK:
+X-MICROSOFT-ONLINEMEETINGINFORMATION:{"OnlineMeetingChannelId":null\,"Onlin
+ eMeetingProvider":3}
+X-MICROSOFT-ONLINEMEETINGTOLLNUMBER:+64 9-888 8484
+X-MICROSOFT-ONLINEMEETINGCONFERENCEID:159106888
+X-MICROSOFT-SKYPETEAMSMEETINGURL:https://teams.microsoft.com/l/meetup-join/
+ 19%3ameeting_ZGYzNDZmMjUtNTU1MS00YzgwLWI2ODgtNjNjZjk5NDg4N2Uz%40thread.v2/
+ 0?context=%7b%22Tid%22%3a%22f6b3cec6-a862-4a40-9ab4-00d6e11e6f0f%22%2c%22O
+ id%22%3a%22e1c38b58-e0d7-437c-99df-9ce926bab4e1%22%7d
+X-MICROSOFT-SCHEDULINGSERVICEUPDATEURL:https://api.scheduler.teams.microsof
+ t.com/teams/f6b3cec6-a862-4a40-9ab4-00d6e11e6f0f/e1c38b58-e0d7-437c-99df-9
+ ce926bab4e1/19_meeting_ZGYzNDZmMjUtNTU1MS00YzgwLWI2ODgtNjNjZjk5NDg4N2Uz@th
+ read.v2/0
+X-MICROSOFT-SKYPETEAMSPROPERTIES:{"cid":"19:meeting_ZGYzNDZmMjUtNTU1MS00Yzg
+ wLWI2ODgtNjNjZjk5NDg4N2Uz@thread.v2"\,"rid":"0"\,"mid":"0"\,"private":true
+ \,"type":0}
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-REQUESTEDATTENDANCEMODE:DEFAULT
+X-MICROSOFT-LOCATIONDISPLAYNAME:Microsoft Teams Meeting
+X-MICROSOFT-LOCATIONSOURCE:None
+X-MICROSOFT-LOCATIONS:[{"DisplayName":"Microsoft Teams Meeting"\,"LocationA
+ nnotation":""\,"LocationUri":""\,"LocationStreet":""\,"LocationCity":""\,"
+ LocationState":""\,"LocationCountry":""\,"LocationPostalCode":""\,"Locatio
+ nFullAddress":""}]
+BEGIN:VALARM
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT15M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR
