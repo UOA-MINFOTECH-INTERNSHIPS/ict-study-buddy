@@ -3,8 +3,7 @@ import { Message } from "../db/message-schema.js";
 
 const router = express.Router();
 
-//add
-
+// Add a new message to a conversation
 router.post("/", async (req, res) => {
   const newMessage = new Message(req.body);
 
@@ -16,8 +15,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//get
-
+// Get all messages in a conversation
 router.get("/:conversationId", async (req, res) => {
   try {
     const messages = await Message.find({
@@ -30,4 +28,3 @@ router.get("/:conversationId", async (req, res) => {
 });
 
 export default router;
-
