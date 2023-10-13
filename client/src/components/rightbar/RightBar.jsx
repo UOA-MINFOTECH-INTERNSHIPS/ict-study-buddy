@@ -6,10 +6,11 @@ import { makeRequest } from "../../axios";
 import moment from "moment";
 
 function RightBar() {
+  // Use a query to fetch recent posts for the "Latest Activities" section
   const {
-    isLoading,
-    error,
-    data: posts,
+    isLoading, // Flag to indicate if data is still loading
+    error, // If there's an error in data retrieval
+    data: posts, // Recent posts data fetched from the API
   } = useQuery(["Posts"], async () => {
     const res = await makeRequest.get("/post/recent-posts");
     return res.data;

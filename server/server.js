@@ -22,7 +22,7 @@ import groupRoute from "./routes/groups.js";
 import searchRoute from "./routes/search.js";
 import cookieParser from "cookie-parser";
 
-//Setup Express
+// Setup Express application
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -52,18 +52,18 @@ const storage = multer.diskStorage({
   },
 });
 
-// Make the "public" folder available statically
+// Make the "public" folder available statically to serve uploaded images
 const dirname = url.fileURLToPath(new URL(".", import.meta.url));
 app.use("/images", express.static(path.join(dirname, "public/images")));
 
-//Set up upload file api
+// Set up an API endpoint for file uploads
 const upload = multer({ storage: storage });
 
 app.post("/api/upload", upload.single("file"), (req, res) => {
   try {
     const fileData = {
       name: req.file.originalname,
-      url: "http://localhost:3000/images/" + req.file.filename, 
+      url: "http://localhost:3000/images/" + req.file.filename,
     };
     res.status(200).json(fileData);
   } catch (error) {
@@ -72,7 +72,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   }
 });
 
-// Setup API routes.
+// Setup API routes for various features
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/post", postRoute);

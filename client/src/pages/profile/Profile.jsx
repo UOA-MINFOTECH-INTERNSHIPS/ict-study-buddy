@@ -6,11 +6,13 @@ import { makeRequest } from "../../axios";
 import { useParams } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 function Profile() {
+  // Get the userId from the URL parameter
   const userId = useParams().userId;
   const { currentUser } = useContext(AuthContext);
 
+  // Fetch user data with React Query
   const {
     isLoading,
     error,
@@ -21,7 +23,7 @@ function Profile() {
     })
   );
 
-  //Get profile user followers.
+  // Get the profile user's followers using React Query
   const { isLoading: followerLoading, data: followers } = useQuery(
     ["followers"],
     () =>
@@ -29,12 +31,14 @@ function Profile() {
         return res.data;
       })
   );
-  useEffect(()=>{
-    console.log("in profile page", userId, currentUser._id)
-})
+
+  useEffect(() => {
+    console.log("in profile page", userId, currentUser._id);
+  });
 
   const queryClient = useQueryClient();
 
+  // Create a mutation to follow/unfollow the user
   const mutation = useMutation(
     () => {
       return makeRequest.put(`/connection/${user._id}/follow`);
@@ -46,10 +50,12 @@ function Profile() {
     }
   );
 
+  // Function to handle the follow/unfollow action
   const handleFollow = () => {
     mutation.mutate();
   };
 
+  // Check for errors in the fetch
   if (error) return "An error has occurred: " + error.message;
 
   return (

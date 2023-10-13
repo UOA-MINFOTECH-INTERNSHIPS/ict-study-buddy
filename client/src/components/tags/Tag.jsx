@@ -8,7 +8,6 @@ import ListItemText from "@mui/material/ListItemText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import SchoolIcon from "@mui/icons-material/School";
-import { blue } from "@mui/material/colors";
 
 const tags = [
   {

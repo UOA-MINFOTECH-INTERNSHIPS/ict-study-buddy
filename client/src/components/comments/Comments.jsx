@@ -7,10 +7,10 @@ import { makeRequest } from "../../axios";
 import moment from "moment";
 
 function Comments({ postId, onCommentSubmitted }) {
-  const [desc, setDesc] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [desc, setDesc] = useState(""); // State to store the comment text.
+  const [errorMessage, setErrorMessage] = useState(""); // State to store error messages.
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext); // Get the current user's information.
 
   const { isLoading, data: comments } = useQuery(
     ["comments", postId],
@@ -20,7 +20,7 @@ function Comments({ postId, onCommentSubmitted }) {
     }
   );
 
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient(); // Query client for managing query data.
 
   const mutation = useMutation(
     (newComment) => {
