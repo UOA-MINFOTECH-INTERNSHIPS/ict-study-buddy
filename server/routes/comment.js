@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
+// Function to verify a JWT token and extract user information
 async function verifyToken(token) {
   return new Promise((resolve, reject) => {
     jwt.verify(token, "secretkey", (err, userInfo) => {
@@ -18,16 +19,18 @@ async function verifyToken(token) {
   });
 }
 
-//Add a comment
+// Add a comment to a post
 router.post("/", async (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
 
-  const userInfo = await verifyToken(token); // Get user information from the token
-  const currentUserId = userInfo.userId; // Get the current user's ID from the token
+  // Verify and extract user information from the token
+  const userInfo = await verifyToken(token);
+  const currentUserId = userInfo.userId;
 
   try {
-    const currentUser = await User.findById(currentUserId); //Find the current user
+    // Find the current user and the post by ID
+    const currentUser = await User.findById(currentUserId);
     const post = await Post.findById(req.body.postId);
 
     // Create a new comment
@@ -38,44 +41,53 @@ router.post("/", async (req, res) => {
       postId: req.body.postId,
       profilePic: currentUser.profilePic,
     });
-    //Save the new comment
+
+    // Save the new comment
     const comment = await newComment.save();
+
     // Update the post to include the new comment
     await post.updateOne({ $push: { comments: comment } });
+
     res.status(201).json(post);
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
-//Get comments
+// Get comments related to a specific post
 router.get("/:id", async (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
+
+  // Verify the token's validity
   jwt.verify(token, "secretkey", (err) => {
     if (err) return res.status(403).json("Token is not valid!");
   });
 
-  const postId = req.params.id; //Get the post id from the request params
+  const postId = req.params.id; // Get the post ID from the request params
 
   try {
-    const comments = await Comment.find({ postId: postId }); // Find the comments ralated to the post
+    // Find comments related to the specified post
+    const comments = await Comment.find({ postId: postId });
     res.status(200).json(comments);
   } catch (error) {
     res.status(500).json(error);
   }
 });
 
-//Delete a comment
+// Delete a comment by ID
 router.delete("/:id", async (req, res) => {
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("Not logged in!");
-  const userInfo = await verifyToken(token); // Get user information from the token
-  const currentUserId = userInfo.userId; // Get the current user's ID from the token
+
+  // Extract user information from the token
+  const userInfo = await verifyToken(token);
+  const currentUserId = userInfo.userId;
+
   const commentId = req.params.id; // Get the comment ID from the request parameters
 
   try {
-    //Find the comment
+    // Find the comment by ID
     const comment = await Comment.findById(commentId);
 
     // Check if the comment exists
@@ -85,7 +97,7 @@ router.delete("/:id", async (req, res) => {
 
     // Ensure the user is the owner of the comment
     if (comment.userId === currentUserId) {
-      //Find and delete the comment
+      // Find and delete the comment
       await Comment.findByIdAndDelete(commentId);
       res.status(204).json("The comment has been deleted");
     } else {
