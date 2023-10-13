@@ -19,15 +19,16 @@ import { useContext } from "react";
 import { DarkModeContext } from "./context/darkModeContext";
 import { AuthContext } from "./context/authContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SearchContextProvider} from "./context/searchContext";
+import { SearchContextProvider } from "./context/searchContext";
 
 const queryClient = new QueryClient();
 
 function App() {
+  // Get the current user and dark mode status from their respective contexts.
   const { currentUser } = useContext(AuthContext);
-
   const { darkMode } = useContext(DarkModeContext);
 
+  // Layout component that wraps your application content.
   const Layout = () => {
     return (
       <QueryClientProvider client={queryClient}>
@@ -41,13 +42,16 @@ function App() {
     );
   };
 
+  // ProtectedRoute component to handle authentication checks.
   const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
+      // Redirect to the login page if there is no authenticated user.
       return <Navigate to="/login" />;
     }
     return children;
   };
 
+  // Create a router with defined routes.
   const router = createBrowserRouter([
     {
       path: "/",
@@ -88,6 +92,7 @@ function App() {
       element: <Register />,
     },
   ]);
+
   return (
     <div>
       <RouterProvider router={router} />

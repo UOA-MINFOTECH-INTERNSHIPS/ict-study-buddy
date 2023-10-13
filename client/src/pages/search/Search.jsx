@@ -10,7 +10,7 @@ import RightBar from "../../components/rightbar/RightBar";
 function Search() {
   const { result } = useContext(SearchContext);
 
-  const { query } = useParams();
+  const { query } = useParams(); // Get the query parameter from the URL
 
   return (
     <div className="search">
@@ -35,9 +35,9 @@ function Search() {
         <div className="results">
           {result && result.users && result.users.length > 0 ? (
             result.users.map((user, index) => <User user={user} key={index} />)
-            ) : (
-              <p>No posts found.</p>
-            )}
+          ) : (
+            <p>No posts found.</p>
+          )}
         </div>
       </div>
       <RightBar />

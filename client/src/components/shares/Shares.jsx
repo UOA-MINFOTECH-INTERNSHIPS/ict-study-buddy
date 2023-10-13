@@ -10,7 +10,7 @@ import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import SimpleDialog from "../tags/Tag";
 
 function Shares() {
-  const { currentUser } = useContext(AuthContext); //Get currentUser's infos.
+  const { currentUser } = useContext(AuthContext); // Get currentUser's information.
 
   const [desc, setDesc] = useState(""); // Initialize the content to an empty string.
   const [file, setFile] = useState(null); // Initialize the uploaded file to null.
@@ -49,14 +49,14 @@ function Shares() {
       desc: desc,
       tags: selectedTags,
       file: fileData,
-    }; //Create a newPost based the content, tags, file
+    }; // Create a newPost based on the content, tags, and file.
     const response = await makeRequest.post("/post", newPost);
     return response.data;
   };
 
   const queryClient = useQueryClient();
 
-  // UseMutation for creating a post with success callback to invalidate queries and reset state.
+  // UseMutation for creating a post with a success callback to invalidate queries and reset state.
   const mutation = useMutation(createPost, {
     onSuccess: async () => {
       queryClient.invalidateQueries(["Posts"]);

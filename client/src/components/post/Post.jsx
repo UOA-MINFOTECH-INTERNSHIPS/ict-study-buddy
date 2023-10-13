@@ -15,24 +15,34 @@ import { AuthContext } from "../../context/authContext";
 import { makeRequest } from "../../axios";
 
 function Post({ post }) {
+  // Get the public folder path
   const PF = import.meta.env.VITE_PUBLIC_FOLDER;
+  // Get the current user from context
   const { currentUser } = useContext(AuthContext);
 
+  // State to track if the post is liked by the current user
   const [liked, setLiked] = useState(post.likes.includes(currentUser._id));
+  // State to track the number of likes
   const [likesCount, setLikesCount] = useState(post.likes.length);
 
+  // State to track if the comments section is open
   const [commentOpen, setCommentOpen] = useState(false);
+  // State to track the number of comments
   const [commentsCount, setCommentsCount] = useState(post.comments.length);
 
+  // State to control the visibility of the more options popover
   const [openMore, setOpenMore] = useState(false);
 
+  // Function to handle the opening and closing of the more options popover
   const handleMoreOpen = () => {
     setOpenMore(!openMore);
   };
 
+  // Function to handle the like/unlike action
   const handleLike = async () => {
     try {
       await makeRequest.put(`/post/${post._id}/like`);
+      // Toggle the liked state and update the number of likes
       setLiked(!liked);
       setLikesCount(liked ? likesCount - 1 : likesCount + 1);
     } catch (error) {

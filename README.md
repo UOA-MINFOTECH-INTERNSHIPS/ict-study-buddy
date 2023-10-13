@@ -30,7 +30,7 @@ yarn start
 # Once you notice that
 App server listening on port 3000!
 
-# which means the server launched successfully. The server is up at http://localhost:8080
+# which means the server launched successfully. The server is up at http://localhost:3000.
 ```
 
 ### How to launch the front end locally?
@@ -62,14 +62,14 @@ yarn start
 1. Open the link: \
 http://localhost:5173/
 
-If you have never logged into this app before, you will be navigated to the Login page.
+You will be navigated to the Login page if you have never logged into this app before.
 <img width="1503" alt="image" src="https://github.com/Monica-Zhang-git/study-buddy/assets/80732580/ffeadde5-f549-45a3-872b-49519f7ab3e8">
 
 2. Input the email address and password.
 
 ```bash
 Test Account One:
-email: monica@gmail.com
+email: monica.zhang.nz@gmail.com
 password: dsfasdf
 
 Test Account Two:
@@ -77,8 +77,8 @@ email: jenny@gmail.com
 password: dsfasdf
 ```
 
-Once you log in to the app, you will be directed to the homepage. Here is the homepage.
-<img width="1505" alt="image" src="https://github.com/UOA-MINFOTECH-INTERNSHIPS/ict-study-buddy/assets/80732580/eeb3f3f2-ddc1-41b0-b2ee-026d4cddcd58">
+You will be directed to the homepage once you log in to the App. Here is the homepage.
+<img width="1512" alt="HomePage" src="https://github.com/UOA-MINFOTECH-INTERNSHIPS/ict-study-buddy/assets/80732580/d676282e-f12b-4961-9623-5f3c3a2dd885">
 
 
 
