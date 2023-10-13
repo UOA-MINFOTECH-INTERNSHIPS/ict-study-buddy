@@ -6,14 +6,16 @@ import { makeRequest } from "../../axios";
 
 export default function Message({ message, own }) {
   const { currentUser } = useContext(AuthContext);
-  const [user, setUser] = useState(null);
-  const [userAvatar, setUserAvatar] = useState(null);
+  const [user, setUser] = useState(null); // State to store user data
+  const [userAvatar, setUserAvatar] = useState(null); // State to store user's avatar URL
 
   useEffect(() => {
     async function getUser() {
       try {
+        // Fetch user data based on the sender's ID
         const response = await makeRequest.get(`/users/${message.sender}`);
         setUser(response.data);
+
         // Preload or cache the sender's avatar
         const senderAvatar = new Image();
         senderAvatar.src = response.data.profilePic;

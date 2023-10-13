@@ -7,7 +7,7 @@ import { makeRequest } from "../../axios";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-// Register form validation
+// Register form validation schema
 const schema = yup
   .object({
     userName: yup.string().max(20).required("Username is required"),
@@ -47,12 +47,13 @@ function Register(props) {
       password: data.password,
     };
     try {
+      // Make a request to register the user
       await makeRequest.post("/auth/register", user);
       setRegistrationSuccess(true); // Use state to control the visibility of the Alert
       reset(); // Reset the form fields
       setTimeout(() => {
         navigate("/login");
-      }, 5000); // Redirect to login page after 5 seconds
+      }, 5000); // Redirect to the login page after 5 seconds
     } catch (error) {
       console.log(error);
     }

@@ -16,28 +16,40 @@ import { DarkModeContext } from "../../context/darkModeContext";
 import { SearchContext } from "../../context/searchContext";
 
 function NavBar() {
+  // Get the dark mode state and toggle function from context
   const { toggle, darkMode } = useContext(DarkModeContext);
 
+  // Get the current user's information from context
   const { currentUser } = useContext(AuthContext);
 
+  // Get the search function from context
   const { search } = useContext(SearchContext);
 
+  // Define a state to store the search query
   const [query, setQuery] = useState("");
 
+  // Get the router's navigation function
   const navigate = useNavigate();
 
+  // Define a function to handle search
   const handleSearch = async () => {
+    // Check if the search query is empty
     if (query.trim() === "") {
       return;
     }
+
     try {
+      // Call the search function with the query
       await search(query);
+      // Navigate to the search results page with the query
       navigate(`/search/${query}`);
+      // Clear the search query input
       setQuery("");
     } catch (error) {
       console.log("error", error);
     }
   };
+
   // Define a function to handle Enter key press
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {

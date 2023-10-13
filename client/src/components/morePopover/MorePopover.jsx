@@ -14,18 +14,18 @@ import { makeRequest } from "../../axios";
 import EditPost from "../editPost/EditPost";
 
 function MorePopover({ postId, post, handleMoreOpen }) {
-  const [optionOpen, setOptionOpen] = useState(true);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [editDialogOpne, setEditDialogOpen] = useState(false);
+  const [optionOpen, setOptionOpen] = useState(true); // State to control whether options are open or closed
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false); // State to control the delete dialog visibility
+  const [editDialogOpne, setEditDialogOpen] = useState(false); // State to control the edit dialog visibility
 
   const handleDeleteDialogOpen = () => {
     setDeleteDialogOpen(!deleteDialogOpen);
-    setOptionOpen(!optionOpen);
+    setOptionOpen(!optionOpen); // Close the options menu when the delete dialog is opened
   };
 
   const handleEditDialogOpen = () => {
     setEditDialogOpen(!editDialogOpne);
-    setOptionOpen(!optionOpen);
+    setOptionOpen(!optionOpen); // Close the options menu when the edit dialog is opened
   };
 
   const handleDeletePost = async () => {
@@ -33,23 +33,23 @@ function MorePopover({ postId, post, handleMoreOpen }) {
       const res = await makeRequest.delete(`/post/${postId}`);
       return res.data;
     } catch (error) {
-      console.error(err);
+      console.error(error); // Log the error if the delete request fails
     }
   };
 
   const queryClient = useQueryClient();
 
-  // UseMutation for delete a post with success callback to invalidate queries and reset state.
+  // UseMutation for deleting a post with success callback to invalidate queries and reset state.
   const mutation = useMutation(handleDeletePost, {
     onSuccess: async () => {
-      queryClient.invalidateQueries(["Posts"]);
-      setDeleteDialogOpen(false);
+      queryClient.invalidateQueries(["Posts"]); // Invalidate the "Posts" query to reflect the post deletion
+      setDeleteDialogOpen(false); // Close the delete dialog after successful deletion
     },
   });
 
   // Function to handle the post delete process.
   const handleDeleteDialog = async () => {
-    mutation.mutate();
+    mutation.mutate(); // Trigger the delete post mutation
   };
 
   return (

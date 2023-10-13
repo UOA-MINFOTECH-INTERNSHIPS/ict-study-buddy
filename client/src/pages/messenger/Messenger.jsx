@@ -9,17 +9,22 @@ import { makeRequest } from "../../axios";
 import InsertPhotoIcon from "@mui/icons-material/InsertPhoto";
 
 export default function Messenger() {
+  // State to manage conversations, current chat, and messages
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const [onlineUsers, setOnlineUsers] = useState([]);
+
+  // Reference to the socket.io client
   const socket = useRef();
-  const { currentUser } = useContext(AuthContext);
+  // Reference to the scroll element
   const scrollRef = useRef();
+  // State for selected file
   const [selectedFile, setSelectedFile] = useState(null);
 
+  // Set up a WebSocket connection with the server
   useEffect(() => {
     socket.current = io("ws://localhost:8900");
     socket.current.on("getMessage", (data) => {
@@ -31,12 +36,14 @@ export default function Messenger() {
     });
   }, []);
 
+  // Listen for new messages and update the UI
   useEffect(() => {
     arrivalMessage &&
       currentChat?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
   }, [arrivalMessage, currentChat]);
 
+  // Connect to the server and get online users
   useEffect(() => {
     socket.current.emit("addUser", currentUser._id);
     socket.current.on("getUsers", (users) => {
@@ -46,6 +53,7 @@ export default function Messenger() {
     });
   }, [currentUser]);
 
+  // Get user's conversations
   useEffect(() => {
     const getConversations = async () => {
       try {
@@ -58,6 +66,7 @@ export default function Messenger() {
     getConversations();
   }, [currentUser._id]);
 
+  // Get messages for the current chat
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -82,7 +91,6 @@ export default function Messenger() {
         const response = await makeRequest.post("/upload", formData);
         if (response.status === 200) {
           const fileData = await response.data;
-          // console.log("fileData", fileData);
           const messageText = `File: ${fileData.name}, URL: ${fileData.url}`;
           const message = {
             sender: currentUser._id,
@@ -119,6 +127,7 @@ export default function Messenger() {
     }
   };
 
+  // Function to handle form submission and send a new message
   const handleSubmit = async (e) => {
     e.preventDefault();
     const message = {
@@ -131,6 +140,7 @@ export default function Messenger() {
       (member) => member !== currentUser._id
     );
 
+    // Send the message to the server
     socket.current.emit("sendMessage", {
       senderId: currentUser._id,
       receiverId,
@@ -146,6 +156,7 @@ export default function Messenger() {
     }
   };
 
+  // Automatically scroll to the latest message
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
