@@ -19,6 +19,7 @@ export default function Messenger() {
 
   // Reference to the socket.io client
   const socket = useRef();
+  const {currentUser} = useContext(AuthContext);
   // Reference to the scroll element
   const scrollRef = useRef();
   // State for selected file
